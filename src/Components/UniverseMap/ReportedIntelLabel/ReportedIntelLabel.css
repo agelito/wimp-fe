@@ -1,0 +1,11 @@
+.intel-label {
+  font-size: 1.8rem;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  height: 100%;
+}

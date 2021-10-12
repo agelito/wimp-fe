@@ -1,0 +1,16 @@
+{
+    "application_name": "WOMP Intel Monitoring Program",
+    "navbar_home": "Home",
+    "navbar_settings": "Settings",
+    "language_english": "English",
+    "language_swedish": "Swedish",
+    "settings_title": "Settings",
+    "settings_language": "Language",
+    "settings_language_aria": "Select language",
+    "settings_dark_mode": "Dark Mode",
+    "settings_dark_mode_aria": "Select dark mode",
+    "settings_jumpsWithCount_one": "Map Size: {{count}} Jump",
+    "settings_jumpsWithCount_other": "Map Size: {{count}} Jumps",
+    "universe_map_fetch_error_title": "Error fetching map data!",
+    "universe_map_fetch_error_description": "Reload this window to try fetching again. Please contact site admin if issue persists."
+}
