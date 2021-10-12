@@ -1,4 +1,5 @@
-import { Form } from "react-bootstrap";
+import { Toggle } from "@fluentui/react";
+import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../State/hooks";
 import { selectDarkMode, setDarkMode } from "../../State/Settings/settingsSlice";
@@ -9,8 +10,18 @@ function DarkModeSwitch() {
     const darkMode = useAppSelector(selectDarkMode);
     const dispatch = useAppDispatch();
 
+    const onChange = useCallback((_, checked?: boolean) => {
+        dispatch(setDarkMode(checked ?? false))
+    }, [dispatch])
+
     return (
-        <Form.Switch checked={darkMode} onChange={event => dispatch(setDarkMode(event.target.checked))} label={t("settings_dark_mode")} />
+        <Toggle
+            label={t("settings_dark_mode")}
+            defaultChecked={darkMode}
+            onText={t("toggle_on")}
+            offText={t("toggle_off")}
+            onChange={onChange}
+            role="checkbox" />
     );
 }
 

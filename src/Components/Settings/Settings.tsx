@@ -1,4 +1,4 @@
-import { Form, Offcanvas } from "react-bootstrap";
+import { Panel, Slider, Stack } from "@fluentui/react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../State/hooks";
 import { selectFetchNumberOfJumps, setFetchNumberOfJumps } from "../../State/Settings/settingsSlice";
@@ -12,7 +12,7 @@ function Settings({ show, handleClose }: { show: boolean, handleClose: () => voi
     const jumps = useAppSelector(selectFetchNumberOfJumps);
     const dispatch = useAppDispatch();
 
-    return (
+    return (/*
         <Offcanvas show={show} onHide={handleClose} placement={"end"}>
             <Offcanvas.Header closeButton>
                 <Offcanvas.Title>{t("settings_title")}</Offcanvas.Title>
@@ -32,7 +32,27 @@ function Settings({ show, handleClose }: { show: boolean, handleClose: () => voi
                 </Form>
 
             </Offcanvas.Body>
-        </Offcanvas>
+        </Offcanvas>*/
+        <Panel
+            headerText={t("settings_title")}
+            isBlocking={false}
+            isOpen={show}
+            onDismiss={handleClose}
+            closeButtonAriaLabel={t("button_close_aria_label")}
+        >
+            <Stack tokens={{ childrenGap: 8, padding: 4 }}>
+                <LanguageSelect />
+                <DarkModeSwitch />
+                <Slider
+                    label={t("settings_map_size")}
+                    min={1}
+                    max={10}
+                    value={jumps}
+                    showValue
+                    onChange={v => dispatch(setFetchNumberOfJumps(v))}
+                />
+            </Stack>
+        </Panel>
     );
 }
 

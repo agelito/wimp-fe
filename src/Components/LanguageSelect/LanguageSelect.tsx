@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { FloatingLabel, Form } from "react-bootstrap";
+import { Dropdown, IDropdownOption } from "@fluentui/react";
+import { FormEvent, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../State/hooks";
 import { selectLanguage, setLanguage } from "../../State/Settings/settingsSlice";
@@ -15,16 +15,23 @@ export const LanguageSelect = () => {
         i18n.changeLanguage(language);
     }, [language, i18n]);
 
-    const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        dispatch(setLanguage(event.target.value));
+    const handleLanguageChange = (_: FormEvent<HTMLDivElement>, item?: IDropdownOption) => {
+        if (!item) return;
+        dispatch(setLanguage(item.id ?? 'en'));
     };
 
+    const languageOptions = [
+        { key: 'en', id: "en", text: t("language_english") },
+        { key: 'se', id: "se", text: t("language_swedish") },
+    ];
+
     return (
-        <FloatingLabel controlId="languageSelect" label={t("settings_language")}>
-            <Form.Select value={language} onChange={handleLanguageChange} aria-label={t("settings_language_aria")}>
-                <option value="en">{t("language_english")}</option>
-                <option value="se">{t("language_swedish")}</option>
-            </Form.Select>
-        </FloatingLabel>
+        <Dropdown
+            label={t("settings_language")}
+            selectedKey={language}
+            onChange={handleLanguageChange}
+            placeholder="settings_language_placeholder"
+            options={languageOptions}
+        />
     );
 };

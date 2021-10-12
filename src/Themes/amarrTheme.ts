@@ -1,0 +1,26 @@
+export const amarrTheme = {
+    palette: {
+        themePrimary: '#9a6928',
+        themeLighterAlt: '#060402',
+        themeLighter: '#181106',
+        themeLight: '#2e1f0c',
+        themeTertiary: '#5c3e18',
+        themeSecondary: '#875b23',
+        themeDarkAlt: '#a37437',
+        themeDark: '#b1864e',
+        themeDarker: '#c6a274',
+        neutralLighterAlt: '#1c1b10',
+        neutralLighter: '#252416',
+        neutralLight: '#343221',
+        neutralQuaternaryAlt: '#3d3b27',
+        neutralQuaternary: '#45422d',
+        neutralTertiaryAlt: '#656148',
+        neutralTertiary: '#423c35',
+        neutralSecondary: '#84796b',
+        neutralPrimaryAlt: '#c1b19c',
+        neutralPrimary: '#dbc9b2',
+        neutralDark: '#e4d6c3',
+        black: '#ebe0d2',
+        white: '#12110a',
+    }
+};
