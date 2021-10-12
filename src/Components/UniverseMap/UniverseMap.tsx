@@ -4,10 +4,9 @@ import * as d3 from "d3";
 import { deselectSystem, moveToSystem, selectSelectedSystemId, selectSystem, useGetUniverseGraphWithinJumpsQuery } from "../../State/Universe/universeSlice";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MapNode from "./MapNode";
-import { Alert } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
 import { LoadingData } from "./LoadingData";
 import { useAppDispatch, useAppSelector } from "../../State/hooks";
+import { ErrorAlert } from "../Alerts/ErrorAlert";
 
 export type SystemData = {
     systemId: number,
@@ -26,8 +25,6 @@ type GraphEdge = Edge;
 type GraphNodeEdge = GraphNode | GraphEdge;
 
 function UniverseMap({ systemId, mapSize }: { systemId: number, mapSize: number }) {
-    const { t } = useTranslation();
-
     const dispatch = useAppDispatch();
     const selectedSystemId = useAppSelector(selectSelectedSystemId);
 
@@ -160,23 +157,20 @@ function UniverseMap({ systemId, mapSize }: { systemId: number, mapSize: number 
 
     return (
         error ?
-            <Alert variant="danger">
-                <Alert.Heading>{t('universe_map_fetch_error_title')}</Alert.Heading>
-                <p>
-                    {t('universe_map_fetch_error_description')}
-                </p>
-            </Alert> :
-            isLoading ? <LoadingData /> : <ReactFlow
-                elements={graphNodesAndEdges}
-                nodeTypes={{ mapNode: MapNode }}
-                elementsSelectable={false}
-                nodesConnectable={false}
-                nodesDraggable={false}
-                onElementClick={handleElementClicked}
-                onLoad={onLoadReactFlow}
-            >
-                <Controls showInteractive={false} />
-            </ReactFlow >
+            <ErrorAlert messageId={"universe_map_fetch_error_description"} /> :
+            isLoading ? <LoadingData /> : <div style={{ height: "100%" }}>
+                <ReactFlow
+                    elements={graphNodesAndEdges}
+                    nodeTypes={{ mapNode: MapNode }}
+                    elementsSelectable={false}
+                    nodesConnectable={false}
+                    nodesDraggable={false}
+                    onElementClick={handleElementClicked}
+                    onLoad={onLoadReactFlow}
+                >
+                    <Controls showInteractive={false} />
+                </ReactFlow >
+            </div>
     );
 }
 

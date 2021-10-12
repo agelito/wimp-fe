@@ -6,11 +6,17 @@
     "language_swedish": "Swedish",
     "settings_title": "Settings",
     "settings_language": "Language",
+    "settings_language_placeholder": "Select a language",
     "settings_language_aria": "Select language",
     "settings_dark_mode": "Dark Mode",
     "settings_dark_mode_aria": "Select dark mode",
-    "settings_jumpsWithCount_one": "Map Size: {{count}} Jump",
-    "settings_jumpsWithCount_other": "Map Size: {{count}} Jumps",
-    "universe_map_fetch_error_title": "Error fetching map data!",
-    "universe_map_fetch_error_description": "Reload this window to try fetching again. Please contact site admin if issue persists."
+    "settings_map_size": "Map Size",
+    "universe_map_fetch_error_description": "Error fetching map data! Reload this window to try fetching again. Please contact site admin if issue persists.",
+    "error_alert_dismiss_button_aria": "Dismiss",
+    "button_close_aria_label": "Close",
+    "button_settings": "Settings",
+    "button_settings_tooltip": "Settings",
+    "button_settings_aria": "Settings",
+    "toggle_on": "On",
+    "toggle_off": "Off"
 }

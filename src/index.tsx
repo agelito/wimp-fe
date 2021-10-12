@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -9,8 +8,11 @@ import { Provider } from 'react-redux';
 import store from './State/store';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
+import { initializeIcons } from '@fluentui/react/lib/Icons';
 
 const persistor = persistStore(store);
+
+initializeIcons();
 
 ReactDOM.render(
     <React.StrictMode>
