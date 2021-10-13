@@ -60,7 +60,7 @@ const MapNode: React.FC<Props> = ({ data, style }) => {
                     width: "100%",
                     height: "100%",
                     borderRadius: "50%",
-                    backgroundColor: theme.palette.green,
+                    backgroundColor: intelInSystem.length > 0 ? theme.palette.red : theme.palette.green,
                     boxShadow: DefaultEffects.elevation16,
                 }}>
                     <div style={{
