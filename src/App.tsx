@@ -1,6 +1,7 @@
 
 import { Stack, ThemeProvider } from '@fluentui/react';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { IntelPicture } from './Components/IntelPicture/IntelPicture';
 import MainNavigationBar from './Components/MainNavigationBar/MainNavigationBar';
 import { EsiDataServiceProvider } from './DataServices/EsiDataService/Hooks/EsiDataServiceProvider';
 import Home from './Pages/Home/Home';
@@ -23,6 +24,7 @@ function App() {
                                 <Home />
                             </Route>
                         </Switch>
+                        <IntelPicture />
                     </Router>
                 </Stack>
             </ThemeProvider>
