@@ -7,6 +7,7 @@ import { selectLocatedAtSystemId, selectSelectedSystemId } from '../../State/Uni
 import { ReportedIntelLabel } from './ReportedIntelLabel/ReportedIntelLabel';
 import { SystemData } from './UniverseMap';
 import "./MapNode.css";
+import { selectIntelForSystem, selectPicture } from '../../State/Picture/pictureSlice';
 
 interface Props {
     data: SystemData
@@ -16,11 +17,17 @@ interface Props {
 const MapNode: React.FC<Props> = ({ data, style }) => {
     const selectedSystemId = useAppSelector(selectSelectedSystemId);
     const locatedAtSystemId = useAppSelector(selectLocatedAtSystemId);
+    const intelPicture = useAppSelector(selectPicture);
 
     const isLocatedAt = useMemo(() => locatedAtSystemId === data.systemId, [data.systemId, locatedAtSystemId]);
     const isSelected = useMemo(() => selectedSystemId === data.systemId, [data.systemId, selectedSystemId]);
 
     const theme = useTheme();
+
+    const intelInSystem = useMemo(() => {
+        if (!intelPicture) return [];
+        return selectIntelForSystem(intelPicture, data.systemId)
+    }, [data.systemId, intelPicture]);
 
     const nodeBackgroundColor = useMemo(() => {
         if (isSelected) {
@@ -63,7 +70,7 @@ const MapNode: React.FC<Props> = ({ data, style }) => {
                         backgroundColor: nodeBackgroundColor,
                         ...style
                     }}>
-                        <ReportedIntelLabel reportedIntelCount={data.reportedCount ?? 0} />
+                        <ReportedIntelLabel reportedIntelCount={intelInSystem.length} />
                     </div>
                 </div>
             </div>

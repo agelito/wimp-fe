@@ -9,9 +9,11 @@ export const ReportedIntelLabel: React.FC<Props> = ({ reportedIntelCount }) => {
 
     return (
         <div className={"flex-container"}>
-            <div className={"intel-label text-monospace"}>
-                {reportedIntelCount}
-            </div>
+            {
+                reportedIntelCount > 0 && <div className={"intel-label text-monospace"}>
+                    {reportedIntelCount}
+                </div>
+            }
         </div>
     );
 }

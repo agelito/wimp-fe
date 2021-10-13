@@ -6,11 +6,11 @@ import { ReadIntelDto } from "../../Dtos/Wimp/ReadIntelDto";
 
 interface PictureState {
     generatedDate?: Date,
-    characters: Map<number, ReadIntelDto>;
+    characterIntel: ReadIntelDto[];
 };
 
 const initialState: PictureState = {
-    characters: new Map(),
+    characterIntel: [],
 };
 
 export const pictureSlice = createSlice({
@@ -22,10 +22,13 @@ export const pictureSlice = createSlice({
             const sortedIntel = [...picture.reported_intel]
                 .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
 
+            var characters = new Map(state.characterIntel?.map(ci => [ci.character.id, ci]));
+
             sortedIntel.forEach(i => {
-                state.characters.set(i.id, i);
+                characters.set(i.character.id, i);
             });
 
+            state.characterIntel = Array.from(characters.values());
             state.generatedDate = picture.generated_time;
         },
     }
@@ -35,7 +38,7 @@ export const wimpPictureApi = createApi({
     reducerPath: 'wimpPictureApi',
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/picture' }),
     endpoints: (builder) => ({
-        getPicture: builder.query<ReadPictureDto[], {}>({
+        getPicture: builder.query<ReadPictureDto, {}>({
             query: () => `/`,
         }),
     }),
@@ -46,6 +49,7 @@ export const wimpPictureApi = createApi({
 export const { useGetPictureQuery } = wimpPictureApi
 
 export const { addPicture } = pictureSlice.actions;
-export const selectPictureForSystem = (state: RootState, systemId: number) =>
-    Array.from(state.picture.characters.values()).filter(intel => intel.starSystem.id === systemId);
+export const selectPicture = (state: RootState) => state.picture;
+export const selectIntelForSystem = (state: PictureState, systemId: number) =>
+    state.characterIntel.filter(intel => intel.starSystem.id === systemId);
 export default pictureSlice.reducer;

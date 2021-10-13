@@ -11,7 +11,6 @@ import { ErrorAlert } from "../Alerts/ErrorAlert";
 export type SystemData = {
     systemId: number,
     systemName: string,
-    reportedCount?: number,
 }
 
 type GraphState = {
@@ -43,7 +42,7 @@ function UniverseMap({ systemId, mapSize }: { systemId: number, mapSize: number 
             var node: GraphNode = {
                 id: `${s.systemId}`,
                 type: "mapNode",
-                data: { ...s, reportedCount: Math.round(Math.random() * 10) },
+                data: { ...s },
                 position: {
                     x: (position?.x ?? 0) * 3,
                     y: (position?.y ?? 0) * 3,
