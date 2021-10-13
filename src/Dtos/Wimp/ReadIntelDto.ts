@@ -13,5 +13,5 @@ export type ReadIntelDto = {
         id: number,
         name: string,
     },
-    timestamp: Date,
+    timestamp: string,
 }

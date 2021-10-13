@@ -5,7 +5,7 @@ import { ReadPictureDto } from "../../Dtos/Wimp/ReadPictureDto";
 import { ReadIntelDto } from "../../Dtos/Wimp/ReadIntelDto";
 
 interface PictureState {
-    generatedDate?: Date,
+    generatedDate?: string,
     characterIntel: ReadIntelDto[];
 };
 
@@ -20,9 +20,24 @@ export const pictureSlice = createSlice({
         addPicture: (state, action: PayloadAction<ReadPictureDto>) => {
             const picture = action.payload;
             const sortedIntel = [...picture.reported_intel]
-                .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+                .sort((a, b) => Date.parse(a.timestamp) - Date.parse(b.timestamp));
 
-            var characters = new Map(state.characterIntel?.map(ci => [ci.character.id, ci]));
+            const now = new Date();
+            var currentUtcMillis = new Date(
+                now.getUTCFullYear(),
+                now.getUTCMonth(),
+                now.getUTCDate(),
+                now.getUTCHours(),
+                now.getUTCMinutes(),
+                now.getUTCSeconds()
+            ).valueOf();
+
+            // NOTE: 15 = 15 minutes, 60000 = 1 minute in ms
+            var removeAfterUtcMillis = (currentUtcMillis - 15 * 60000);
+
+            var characters = new Map(state.characterIntel
+                .filter(ci => Date.parse(ci.timestamp) > removeAfterUtcMillis)
+                .map(ci => [ci.character.id, ci]));
 
             sortedIntel.forEach(i => {
                 characters.set(i.character.id, i);
@@ -31,6 +46,25 @@ export const pictureSlice = createSlice({
             state.characterIntel = Array.from(characters.values());
             state.generatedDate = picture.generated_time;
         },
+        removeReportsOlderThanMinutes: (state, action: PayloadAction<number>) => {
+            const now = new Date();
+            var currentUtcMillis = new Date(
+                now.getUTCFullYear(),
+                now.getUTCMonth(),
+                now.getUTCDate(),
+                now.getUTCHours(),
+                now.getUTCMinutes(),
+                now.getUTCSeconds()
+            ).valueOf();
+
+            var removeAfterUtcMillis = (currentUtcMillis - action.payload * 60000);
+
+            var characterIntel = state.characterIntel.filter(ci =>
+                Date.parse(ci.timestamp) > removeAfterUtcMillis
+            );
+
+            state.characterIntel = characterIntel;
+        }
     }
 });
 
@@ -48,7 +82,7 @@ export const wimpPictureApi = createApi({
 // auto-generated based on the defined endpoints
 export const { useGetPictureQuery } = wimpPictureApi
 
-export const { addPicture } = pictureSlice.actions;
+export const { addPicture, removeReportsOlderThanMinutes } = pictureSlice.actions;
 export const selectPicture = (state: RootState) => state.picture;
 export const selectIntelForSystem = (state: PictureState, systemId: number) =>
     state.characterIntel.filter(intel => intel.starSystem.id === systemId);
