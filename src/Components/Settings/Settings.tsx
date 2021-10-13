@@ -2,8 +2,8 @@ import { Panel, Slider, Stack } from "@fluentui/react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../State/hooks";
 import { selectFetchNumberOfJumps, setFetchNumberOfJumps } from "../../State/Settings/settingsSlice";
-import DarkModeSwitch from "../DarkModeSwitch/DarkModeSwitch";
 import { LanguageSelect } from "../LanguageSelect/LanguageSelect";
+import { SelectTheme } from "../SelectTheme/SelectTheme";
 
 function Settings({ show, handleClose }: { show: boolean, handleClose: () => void }) {
 
@@ -12,27 +12,7 @@ function Settings({ show, handleClose }: { show: boolean, handleClose: () => voi
     const jumps = useAppSelector(selectFetchNumberOfJumps);
     const dispatch = useAppDispatch();
 
-    return (/*
-        <Offcanvas show={show} onHide={handleClose} placement={"end"}>
-            <Offcanvas.Header closeButton>
-                <Offcanvas.Title>{t("settings_title")}</Offcanvas.Title>
-            </Offcanvas.Header>
-            <Offcanvas.Body>
-                <Form>
-                    <Form.Group className="mb-3" controlId="formLanguageSelect">
-                        <LanguageSelect />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formThemeSelect">
-                        <DarkModeSwitch />
-                    </Form.Group>
-                    <Form.Group className="mb-3" controlId="formNumberOfJumpsSelect">
-                        <Form.Label>{t("settings_jumpsWithCount", { count: jumps })}</Form.Label>
-                        <Form.Range value={jumps} min={1} max={10} onChange={e => dispatch(setFetchNumberOfJumps(e.target.valueAsNumber))} />
-                    </Form.Group>
-                </Form>
-
-            </Offcanvas.Body>
-        </Offcanvas>*/
+    return (
         <Panel
             headerText={t("settings_title")}
             isBlocking={false}
@@ -42,7 +22,7 @@ function Settings({ show, handleClose }: { show: boolean, handleClose: () => voi
         >
             <Stack tokens={{ childrenGap: 8, padding: 4 }}>
                 <LanguageSelect />
-                <DarkModeSwitch />
+                <SelectTheme />
                 <Slider
                     label={t("settings_map_size")}
                     min={1}

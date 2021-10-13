@@ -17,6 +17,11 @@
     "button_settings": "Settings",
     "button_settings_tooltip": "Settings",
     "button_settings_aria": "Settings",
+    "select_theme_label": "Select Theme",
+    "theme_minmatar_name": "Minmatar",
+    "theme_caldari_name": "Caldari",
+    "theme_gallente_name": "Gallente",
+    "theme_amarr_name": "Amarr",
     "toggle_on": "On",
     "toggle_off": "Off"
 }
