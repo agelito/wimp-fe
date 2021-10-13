@@ -6,6 +6,7 @@ import { useAppSelector } from '../../State/hooks';
 import { selectLocatedAtSystemId, selectSelectedSystemId } from '../../State/Universe/universeSlice';
 import { ReportedIntelLabel } from './ReportedIntelLabel/ReportedIntelLabel';
 import { SystemData } from './UniverseMap';
+import "./MapNode.css";
 
 interface Props {
     data: SystemData
@@ -36,19 +37,34 @@ const MapNode: React.FC<Props> = ({ data, style }) => {
             <div style={{
                 width: "70px",
                 height: "70px",
-                borderRadius: "35px",
-                backgroundColor: theme.palette.green,
-                position: "relative",
-                boxShadow: DefaultEffects.elevation16,
+                borderRadius: "50%",
+                background: "transparent",
+                position: "relative"
             }}>
-                <div style={{
-                    inset: 3,
-                    position: "absolute",
+                {isLocatedAt && <div className={"rotate-node"} style={{
+                    inset: "-1.4px",
                     borderRadius: "50%",
-                    backgroundColor: nodeBackgroundColor,
-                    ...style
+                    borderColor: theme.palette.neutralPrimary,
+                    borderStyle: "dotted",
+                    borderWidth: "2px",
+                    position: "absolute"
+                }} />}
+                <div style={{
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "50%",
+                    backgroundColor: theme.palette.green,
+                    boxShadow: DefaultEffects.elevation16,
                 }}>
-                    <ReportedIntelLabel reportedIntelCount={data.reportedCount ?? 0} />
+                    <div style={{
+                        inset: 3,
+                        position: "absolute",
+                        borderRadius: "50%",
+                        backgroundColor: nodeBackgroundColor,
+                        ...style
+                    }}>
+                        <ReportedIntelLabel reportedIntelCount={data.reportedCount ?? 0} />
+                    </div>
                 </div>
             </div>
             <Handle
