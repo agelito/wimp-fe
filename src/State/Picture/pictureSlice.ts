@@ -39,9 +39,11 @@ export const pictureSlice = createSlice({
                 .filter(ci => Date.parse(ci.timestamp) > removeAfterUtcMillis)
                 .map(ci => [ci.character.id, ci]));
 
-            sortedIntel.forEach(i => {
-                characters.set(i.character.id, i);
-            });
+            sortedIntel
+                .filter(i => i.character)
+                .forEach(i => {
+                    characters.set(i.character.id, i);
+                });
 
             state.characterIntel = Array.from(characters.values());
             state.generatedDate = picture.generated_time;
