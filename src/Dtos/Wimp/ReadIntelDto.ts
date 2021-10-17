@@ -13,5 +13,7 @@ export type ReadIntelDto = {
         id: number,
         name: string,
     },
+    isSpike: boolean,
+    isClear: boolean,
     timestamp: string,
 }
