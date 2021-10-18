@@ -147,7 +147,7 @@ function UniverseMap({ systemId, mapSize }: { systemId: number, mapSize: number 
                 if (selectedSystemId === element.data.systemId) {
                     dispatch(deselectSystem());
                 } else {
-                    dispatch(selectSystem(element.data.systemId));
+                    dispatch(selectSystem(element.data));
                 }
             }
         }
