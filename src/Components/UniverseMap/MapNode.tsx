@@ -1,6 +1,6 @@
 import { useTheme, Text } from '@fluentui/react';
 import { DefaultEffects } from '@fluentui/style-utilities';
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
 import { useAppSelector } from '../../State/hooks';
 import { selectLocatedAtSystemId, selectSelectedSystemId } from '../../State/Universe/universeSlice';
@@ -10,6 +10,7 @@ import "./MapNode.css";
 import { selectIntelForSystem, selectPicture } from '../../State/Picture/pictureSlice';
 import { interpolateRgbBasis } from "d3-interpolate";
 import { getCurrentDateUTC } from '../../Utils/DateUtils';
+import { RadialProgressIndicator } from '../RadialProgressIndicator/RadialProgressIndicator';
 
 interface Props {
     data: SystemData
@@ -60,19 +61,31 @@ const MapNode: React.FC<Props> = ({ data, style }) => {
 
     const mostRecentIntelSinceClear = useMemo(() => intelInSystemSinceClear[0], [intelInSystemSinceClear]);
 
-    const warningColor = useMemo(() => {
-        if (mostRecentIntelSinceClear === undefined) {
-            return warningColorInterpolation(0.0);
+    const [threatInterpolationValue, setThreatInterpolationValue] = useState<number>(0.0);
+
+    useEffect(() => {
+        if (!mostRecentIntelSinceClear) {
+            setThreatInterpolationValue(0.0);
+            return;
         }
 
-        const currentEveTime = getCurrentDateUTC().getTime();
-        const mostRecentTimestamp = Date.parse(mostRecentIntelSinceClear.timestamp);
-        const threatFadeAwayInSeconds = 15 * 60; // 15 minutes
+        const interval = setInterval(() => {
+            const currentEveTime = getCurrentDateUTC().getTime();
+            const mostRecentTimestamp = Date.parse(mostRecentIntelSinceClear.timestamp);
+            const threatFadeAwayInSeconds = 15 * 60; // 15 minutes
 
-        const secondsSinceRecentInSystem = (currentEveTime - mostRecentTimestamp) / 1000.0;
+            const secondsSinceRecentInSystem = (currentEveTime - mostRecentTimestamp) / 1000.0;
 
-        return warningColorInterpolation(1.0 - secondsSinceRecentInSystem / threatFadeAwayInSeconds);
-    }, [mostRecentIntelSinceClear, warningColorInterpolation]);
+            setThreatInterpolationValue(1.0 - (secondsSinceRecentInSystem / threatFadeAwayInSeconds));
+        }, 500);
+
+        return () => {
+            clearInterval(interval);
+        }
+
+    }, [mostRecentIntelSinceClear]);
+
+    const warningColor = useMemo(() => warningColorInterpolation(threatInterpolationValue), [threatInterpolationValue, warningColorInterpolation]);
 
     return (
         <>
@@ -83,6 +96,7 @@ const MapNode: React.FC<Props> = ({ data, style }) => {
                 background: "transparent",
                 position: "relative"
             }}>
+
                 {isLocatedAt && <div className={"rotate-node"} style={{
                     inset: "-1.4px",
                     borderRadius: "50%",
@@ -105,6 +119,7 @@ const MapNode: React.FC<Props> = ({ data, style }) => {
                         backgroundColor: nodeBackgroundColor,
                         ...style
                     }}>
+                        {intelInSystemSinceClear.length ? <RadialProgressIndicator percentage={threatInterpolationValue * 100} style={{ inset: "2px" }} /> : undefined}
                         <ReportedIntelLabel reportedIntelCount={intelInSystemSinceClear.length} />
                     </div>
                 </div>
