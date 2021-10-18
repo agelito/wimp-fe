@@ -3,9 +3,14 @@ import { RootState } from "../store";
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { ReadUniverseGraphDto } from "../../Dtos/Wimp/ReadUniverseGraphDto";
 
+export interface StarSystem {
+    systemId: number;
+    systemName: string;
+}
+
 interface UniverseState {
     locatedAtSystemId: number,
-    selectedSystemId?: number,
+    selectedSystem?: StarSystem,
 };
 
 const initialState: UniverseState = {
@@ -19,11 +24,11 @@ export const universeSlice = createSlice({
         moveToSystem: (state, action: PayloadAction<number>) => {
             state.locatedAtSystemId = action.payload;
         },
-        selectSystem: (state, action: PayloadAction<number>) => {
-            state.selectedSystemId = action.payload;
+        selectSystem: (state, action: PayloadAction<StarSystem>) => {
+            state.selectedSystem = action.payload;
         },
         deselectSystem: (state) => {
-            state.selectedSystemId = undefined;
+            state.selectedSystem = undefined;
         }
     },
 });
@@ -44,6 +49,7 @@ export const { useGetUniverseGraphWithinJumpsQuery } = wimpUniverseApi
 
 export const { moveToSystem, selectSystem, deselectSystem } = universeSlice.actions;
 export const selectUniverse = (state: RootState) => state.universe;
-export const selectSelectedSystemId = (state: RootState) => state.universe.selectedSystemId;
+export const selectSelectedSystemId = (state: RootState) => state.universe.selectedSystem?.systemId;
+export const selectSelectedSystem = (state: RootState) => state.universe.selectedSystem;
 export const selectLocatedAtSystemId = (state: RootState) => state.universe.locatedAtSystemId;
 export default universeSlice.reducer;

@@ -2,6 +2,7 @@ import { CommandBar, DefaultEffects, IStackItemStyles, IStackStyles, Stack, Text
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Settings from "../Settings/Settings";
+import { StarSystemPanel } from "../StarSystemPanel/StarSystemPanel";
 
 function MainNavigationBar() {
     const { t } = useTranslation();
@@ -51,6 +52,7 @@ function MainNavigationBar() {
                 </Stack.Item>
             </Stack>
             <Settings show={settingsShow} handleClose={() => setSettingsShow(false)} />
+            <StarSystemPanel />
         </>
     );
 }

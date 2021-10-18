@@ -3,14 +3,14 @@ import { DefaultEffects } from '@fluentui/style-utilities';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
 import { useAppSelector } from '../../State/hooks';
-import { selectLocatedAtSystemId, selectSelectedSystemId } from '../../State/Universe/universeSlice';
 import { ReportedIntelLabel } from './ReportedIntelLabel/ReportedIntelLabel';
 import { SystemData } from './UniverseMap';
 import "./MapNode.css";
-import { selectIntelForSystem, selectPicture } from '../../State/Picture/pictureSlice';
 import { interpolateRgbBasis } from "d3-interpolate";
 import { getCurrentDateUTC } from '../../Utils/DateUtils';
 import { RadialProgressIndicator } from '../RadialProgressIndicator/RadialProgressIndicator';
+import { useIntelInSystem } from '../../Hooks/Intel/useIntelInSystem';
+import { selectLocatedAtSystemId, selectSelectedSystemId } from '../../State/Universe/universeSlice';
 
 interface Props {
     data: SystemData
@@ -20,30 +20,13 @@ interface Props {
 const MapNode: React.FC<Props> = ({ data, style }) => {
     const selectedSystemId = useAppSelector(selectSelectedSystemId);
     const locatedAtSystemId = useAppSelector(selectLocatedAtSystemId);
-    const intelPicture = useAppSelector(selectPicture);
 
     const isLocatedAt = useMemo(() => locatedAtSystemId === data.systemId, [data.systemId, locatedAtSystemId]);
     const isSelected = useMemo(() => selectedSystemId === data.systemId, [data.systemId, selectedSystemId]);
 
     const theme = useTheme();
 
-    const intelInSystem = useMemo(() => {
-        if (!intelPicture) return [];
-        return selectIntelForSystem(intelPicture, data.systemId)
-            .sort((a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp));
-    }, [data.systemId, intelPicture]);
-
-    const intelInSystemSinceClear = useMemo(() => {
-        const mostRecentClearIntel =
-            intelInSystem.filter(i => i.isClear)[0];
-
-        if (mostRecentClearIntel) {
-            const clearTime = Date.parse(mostRecentClearIntel.timestamp);
-            return intelInSystem.filter(i => Date.parse(i.timestamp) > clearTime);
-        } else {
-            return intelInSystem;
-        }
-    }, [intelInSystem])
+    const { intelInSystemSinceClear } = useIntelInSystem({ systemId: data.systemId });
 
     const nodeBackgroundColor = useMemo(() => {
         if (isSelected) {
@@ -154,7 +137,3 @@ const MapNode: React.FC<Props> = ({ data, style }) => {
 };
 
 export default MapNode;
-
-// export default memo(({ data, style }): React.FC<Props> => {
-
-// });

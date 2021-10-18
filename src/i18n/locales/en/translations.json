@@ -23,5 +23,6 @@
     "theme_gallente_name": "Gallente",
     "theme_amarr_name": "Amarr",
     "toggle_on": "On",
-    "toggle_off": "Off"
+    "toggle_off": "Off",
+    "intel_list_item_no_visual": "N/V"
 }
