@@ -1,13 +1,11 @@
-import { CommandBar, DefaultEffects, IStackItemStyles, IStackStyles, Stack, Text, useTheme } from "@fluentui/react";
-import { useState } from "react";
+import { CommandBar, DefaultEffects, IStackStyles, Stack, Text, useTheme } from "@fluentui/react";
 import { useTranslation } from "react-i18next";
-import Settings from "../Settings/Settings";
-import { StarSystemPanel } from "../StarSystemPanel/StarSystemPanel";
+import { useAppDispatch } from "../../State/hooks";
+import { setShowSettings } from "../../State/Settings/settingsSlice";
 
 function MainNavigationBar() {
     const { t } = useTranslation();
-
-    const [settingsShow, setSettingsShow] = useState<boolean>(false);
+    const dispatch = useAppDispatch();
 
     const theme = useTheme();
 
@@ -18,41 +16,27 @@ function MainNavigationBar() {
             color: theme.palette.neutralPrimary,
         },
     };
-    const titleStackStyle: IStackItemStyles = {
-        root: {
-            alignItems: 'center',
-            display: 'flex',
-            justifyContent: "start",
-        },
-    };
-
-    const menuStackStyle: IStackItemStyles = {
-        root: {
-            alignItems: 'center',
-            display: 'flex',
-            justifyContent: "end",
-        },
-    }
 
     return (
         <>
-            <Stack horizontal styles={mainNavigationBarContainerStyle} tokens={{ childrenGap: 16, padding: 16 }}>
-                <Stack.Item styles={titleStackStyle}>
+            <Stack horizontal styles={mainNavigationBarContainerStyle} tokens={{ childrenGap: 16, padding: 8 }}>
+                <Stack horizontalAlign={"start"} verticalAlign={"center"}>
                     <Text nowrap block variant={"xLarge"}>
                         {t("application_name")}
                     </Text>
-                </Stack.Item>
-                <Stack.Item grow styles={menuStackStyle}>
+                </Stack>
+                <Stack grow horizontalAlign={"end"}>
                     <CommandBar items={[{
                         key: 'settings',
                         text: t("button_settings"),
                         iconProps: { iconName: 'Settings' },
-                        onClick: () => setSettingsShow(true),
+                        onClick: () => {
+                            dispatch(setShowSettings(true));
+                        }
                     }]} />
-                </Stack.Item>
+                </Stack>
             </Stack>
-            <Settings show={settingsShow} handleClose={() => setSettingsShow(false)} />
-            <StarSystemPanel />
+
         </>
     );
 }

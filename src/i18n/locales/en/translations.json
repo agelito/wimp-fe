@@ -1,5 +1,9 @@
 {
     "application_name": "WOMP Intel Monitoring Program",
+    "appbar_settings": "Settings",
+    "appbar_close": "Close",
+    "appbar_maximize": "Maximize",
+    "appbar_minimize": "Minimize",
     "navbar_home": "Home",
     "navbar_settings": "Settings",
     "language_english": "English",
