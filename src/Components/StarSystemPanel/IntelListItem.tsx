@@ -5,6 +5,8 @@ import { useCharacterPortraitQuery } from "../../State/Characters/charactersSlic
 import ReactTimeAgo from "react-time-ago";
 import { getDateUTC } from "../../Utils/DateUtils";
 import { useTranslation } from "react-i18next";
+import { useAppSelector } from "../../State/hooks";
+import { selectLanguage } from "../../State/Settings/settingsSlice";
 
 interface Props {
     intel: ReadIntelDto
@@ -15,6 +17,7 @@ export const IntelListItem: React.FC<Props> = ({ intel }) => {
     const { data } = useCharacterPortraitQuery({ characterId: intel.character.id });
     const date = useMemo(() => getDateUTC(new Date(intel.timestamp)), [intel]);
     const { t } = useTranslation();
+    const language = useAppSelector(selectLanguage);
 
     return (
         <Stack tokens={{
@@ -46,7 +49,7 @@ export const IntelListItem: React.FC<Props> = ({ intel }) => {
                     </Stack>
                     <Stack horizontalAlign={"end"}>
                         <Text variant={"small"}>
-                            <ReactTimeAgo date={date} locale="en" />
+                            <ReactTimeAgo date={date} locale={language} />
                         </Text>
                     </Stack>
                 </Stack>

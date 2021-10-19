@@ -22,7 +22,7 @@ export const LanguageSelect = () => {
 
     const languageOptions = [
         { key: 'en', id: "en", text: t("language_english") },
-        { key: 'se', id: "se", text: t("language_swedish") },
+        { key: 'sv', id: "sv", text: t("language_swedish") },
     ];
 
     return (
