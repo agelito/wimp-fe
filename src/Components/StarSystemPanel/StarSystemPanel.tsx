@@ -1,4 +1,4 @@
-import { Panel, PanelType, Stack } from "@fluentui/react"
+import { Panel, Stack } from "@fluentui/react"
 import { useTranslation } from "react-i18next";
 import { useIntelInSystem } from "../../Hooks/Intel/useIntelInSystem";
 import { useAppDispatch, useAppSelector } from "../../State/hooks";
@@ -15,9 +15,8 @@ export const StarSystemPanel: React.FC = () => {
 
     return (
         <Panel
+            style={{ marginTop: 34 }}
             headerText={selectedSystem?.systemName}
-            type={PanelType.customNear}
-            customWidth={"400px"}
             isBlocking={false}
             isOpen={selectedSystem !== undefined}
             onDismiss={() => dispatch(deselectSystem())}

@@ -1,4 +1,4 @@
-import { Panel, Slider, Stack } from "@fluentui/react";
+import { Panel, PanelType, Slider, Stack } from "@fluentui/react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../State/hooks";
 import { selectFetchNumberOfJumps, setFetchNumberOfJumps } from "../../State/Settings/settingsSlice";
@@ -14,7 +14,10 @@ function Settings({ show, handleClose }: { show: boolean, handleClose: () => voi
 
     return (
         <Panel
+            style={{ marginTop: 34 }}
             headerText={t("settings_title")}
+            type={PanelType.customNear}
+            customWidth={"360px"}
             isBlocking={false}
             isOpen={show}
             onDismiss={handleClose}
