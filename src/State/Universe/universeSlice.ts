@@ -33,9 +33,11 @@ export const universeSlice = createSlice({
     },
 });
 
+const BaseUrl = process.env.REACT_APP_WIMP_API || `http://localhost:5000`
+
 export const wimpUniverseApi = createApi({
     reducerPath: 'wimpUniverseApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/universe' }),
+    baseQuery: fetchBaseQuery({ baseUrl: `${BaseUrl}/universe` }),
     endpoints: (builder) => ({
         getUniverseGraphWithinJumps: builder.query<ReadUniverseGraphDto, { systemId: number, jumps: number }>({
             query: ({ systemId, jumps }) => `/${systemId}/${jumps}`,

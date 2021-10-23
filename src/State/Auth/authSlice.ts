@@ -14,11 +14,13 @@ interface AuthState {
 const initialState: AuthState = {
 };
 
+const BaseUrl = process.env.REACT_APP_WIMP_API || `http://localhost:5000`
+
 export const wimpAuthApi = createApi({
     reducerPath: 'wimpAuthApi',
     tagTypes: ['User'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:5000/user',
+        baseUrl: `${BaseUrl}/user`,
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).auth.token;
             if (token) {

@@ -16,10 +16,12 @@ const initialState: PictureState = {
     statusIntel: [],
 };
 
+const BaseUrl = process.env.REACT_APP_WIMP_API || `http://localhost:5000`
+
 export const wimpPictureApi = createApi({
     reducerPath: 'wimpPictureApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:5000/picture',
+        baseUrl: `${BaseUrl}/picture`,
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).auth.token;
             if (token) {
