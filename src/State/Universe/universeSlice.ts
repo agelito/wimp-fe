@@ -33,7 +33,7 @@ export const universeSlice = createSlice({
     },
 });
 
-const BaseUrl = process.env.REACT_APP_WIMP_API || `http://localhost:5000`
+const BaseUrl = process.env.REACT_APP_WIMP_API || window.location.origin;
 
 export const wimpUniverseApi = createApi({
     reducerPath: 'wimpUniverseApi',

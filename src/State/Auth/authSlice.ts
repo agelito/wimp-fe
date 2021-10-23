@@ -14,7 +14,7 @@ interface AuthState {
 const initialState: AuthState = {
 };
 
-const BaseUrl = process.env.REACT_APP_WIMP_API || `http://localhost:5000`
+const BaseUrl = process.env.REACT_APP_WIMP_API || window.location.origin;
 
 export const wimpAuthApi = createApi({
     reducerPath: 'wimpAuthApi',
