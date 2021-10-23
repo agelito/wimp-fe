@@ -16,6 +16,25 @@ const initialState: PictureState = {
     statusIntel: [],
 };
 
+export const wimpPictureApi = createApi({
+    reducerPath: 'wimpPictureApi',
+    baseQuery: fetchBaseQuery({
+        baseUrl: 'http://localhost:5000/picture',
+        prepareHeaders: (headers, { getState }) => {
+            const token = (getState() as RootState).auth.token;
+            if (token) {
+                headers.set(`authorization`, `Bearer ${token.token}`)
+            }
+            return headers;
+        }
+    }),
+    endpoints: (builder) => ({
+        getPicture: builder.query<ReadPictureDto, {}>({
+            query: () => `/`,
+        }),
+    }),
+})
+
 export const pictureSlice = createSlice({
     name: 'picture',
     initialState,
@@ -66,16 +85,6 @@ export const pictureSlice = createSlice({
         }
     }
 });
-
-export const wimpPictureApi = createApi({
-    reducerPath: 'wimpPictureApi',
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/picture' }),
-    endpoints: (builder) => ({
-        getPicture: builder.query<ReadPictureDto, {}>({
-            query: () => `/`,
-        }),
-    }),
-})
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints

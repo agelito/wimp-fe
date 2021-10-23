@@ -1,13 +1,17 @@
-import { CommandBar, DefaultEffects, IStackStyles, Stack, Text, useTheme } from "@fluentui/react";
+import { DefaultEffects, IconButton, IStackStyles, Stack, Text, useTheme } from "@fluentui/react";
 import { useTranslation } from "react-i18next";
-import { useAppDispatch } from "../../State/hooks";
-import { setShowSettings } from "../../State/Settings/settingsSlice";
+import { selectIsSignedIn } from "../../State/Auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../State/hooks";
+import { toggleShowSettings } from "../../State/Settings/settingsSlice";
+import { LogoutButton } from "../User/LogoutButton";
 
 function MainNavigationBar() {
     const { t } = useTranslation();
     const dispatch = useAppDispatch();
 
     const theme = useTheme();
+
+    const isSignedIn = useAppSelector(selectIsSignedIn);
 
     const mainNavigationBarContainerStyle: IStackStyles = {
         root: {
@@ -18,26 +22,36 @@ function MainNavigationBar() {
     };
 
     return (
-        <>
-            <Stack horizontal styles={mainNavigationBarContainerStyle} tokens={{ childrenGap: 16, padding: 8 }}>
-                <Stack horizontalAlign={"start"} verticalAlign={"center"}>
-                    <Text nowrap block variant={"xLarge"}>
-                        {t("application_name")}
-                    </Text>
-                </Stack>
-                <Stack grow horizontalAlign={"end"}>
-                    <CommandBar items={[{
-                        key: 'settings',
-                        text: t("button_settings"),
-                        iconProps: { iconName: 'Settings' },
-                        onClick: () => {
-                            dispatch(setShowSettings(true));
-                        }
-                    }]} />
-                </Stack>
+        <Stack horizontal styles={mainNavigationBarContainerStyle} tokens={{ childrenGap: 16, padding: 8 }}>
+            <Stack disableShrink horizontal horizontalAlign={"start"}>
+                <IconButton
+                    iconProps={{ iconName: "GlobalNavButton" }}
+                    title={t("appbar_settings")}
+                    ariaLabel={t("appbar_settings")}
+                    styles={{
+                        rootHovered: {
+                            backgroundColor: theme.palette.themeTertiary,
+                            color: theme.palette.black
+                        },
+                        rootPressed: {
+                            backgroundColor: theme.palette.themeSecondary,
+                            color: theme.palette.black
+                        },
+                    }}
+                    onClick={() => {
+                        dispatch(toggleShowSettings());
+                    }}
+                />
             </Stack>
-
-        </>
+            <Stack horizontal grow horizontalAlign={"center"} className={"dragged"} tokens={{ childrenGap: 0, padding: 6 }}>
+                <Text nowrap block variant={"medium"}>
+                    {t("application_name")}
+                </Text>
+            </Stack>
+            {isSignedIn ? <Stack horizontal horizontalAlign={"end"}>
+                <LogoutButton />
+            </Stack> : <></>}
+        </Stack>
     );
 }
 

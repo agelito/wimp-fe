@@ -7,6 +7,7 @@ import MapNode from "./MapNode";
 import { LoadingData } from "./LoadingData";
 import { useAppDispatch, useAppSelector } from "../../State/hooks";
 import { ErrorAlert } from "../Alerts/ErrorAlert";
+import { Stack } from "@fluentui/react";
 
 export type SystemData = {
     systemId: number,
@@ -157,19 +158,22 @@ function UniverseMap({ systemId, mapSize }: { systemId: number, mapSize: number 
     return (
         error ?
             <ErrorAlert messageId={"universe_map_fetch_error_description"} /> :
-            isLoading ? <LoadingData /> : <div style={{ height: "100%" }}>
-                <ReactFlow
-                    elements={graphNodesAndEdges}
-                    nodeTypes={{ mapNode: MapNode }}
-                    elementsSelectable={false}
-                    nodesConnectable={false}
-                    nodesDraggable={false}
-                    onElementClick={handleElementClicked}
-                    onLoad={onLoadReactFlow}
-                >
-                    <Controls showInteractive={false} />
-                </ReactFlow >
-            </div>
+            <Stack grow verticalAlign={"center"} horizontalAlign={"center"} style={{ height: "100%" }}>
+                {
+                    isLoading ? <LoadingData /> :
+                        <ReactFlow
+                            elements={graphNodesAndEdges}
+                            nodeTypes={{ mapNode: MapNode }}
+                            elementsSelectable={false}
+                            nodesConnectable={false}
+                            nodesDraggable={false}
+                            onElementClick={handleElementClicked}
+                            onLoad={onLoadReactFlow}
+                        >
+                            <Controls showInteractive={false} />
+                        </ReactFlow >
+                }
+            </Stack>
     );
 }
 
