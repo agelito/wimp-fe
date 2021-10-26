@@ -37,7 +37,7 @@ const BaseUrl = process.env.REACT_APP_WIMP_API || window.location.origin;
 
 export const wimpUniverseApi = createApi({
     reducerPath: 'wimpUniverseApi',
-    baseQuery: fetchBaseQuery({ baseUrl: `${BaseUrl}/universe` }),
+    baseQuery: fetchBaseQuery({ baseUrl: `${BaseUrl}/api/universe` }),
     endpoints: (builder) => ({
         getUniverseGraphWithinJumps: builder.query<ReadUniverseGraphDto, { systemId: number, jumps: number }>({
             query: ({ systemId, jumps }) => `/${systemId}/${jumps}`,

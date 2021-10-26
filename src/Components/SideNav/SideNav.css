@@ -1,0 +1,25 @@
+.side-nav {
+  min-width: 34px;
+  width: 34px;
+}
+
+.side-nav-enter {
+  width: 34px;
+}
+.side-nav-enter-active {
+  transition: width 300ms;
+  width: 200px;
+}
+.side-nav-enter-done {
+  width: 200px;
+}
+.side-nav-exit {
+  width: 200px;
+}
+.side-nav-exit-active {
+  transition: width 300ms;
+  width: 34px;
+}
+.side-nav-exit-done {
+  width: 34px;
+}

@@ -2,14 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
 interface SettingsState {
-    showSettings: boolean,
+    expandedSideNav: boolean,
     language: string,
     themeId: string,
     fetchNumberOfJumps: number,
 };
 
 const initialState: SettingsState = {
-    showSettings: false,
+    expandedSideNav: false,
     language: 'en',
     themeId: 'caldari',
     fetchNumberOfJumps: 3,
@@ -19,11 +19,11 @@ export const settingsSlice = createSlice({
     name: 'settings',
     initialState,
     reducers: {
-        setShowSettings: (state, action: PayloadAction<boolean>) => {
-            state.showSettings = action.payload;
+        setExpandedSideNav: (state, action: PayloadAction<boolean>) => {
+            state.expandedSideNav = action.payload;
         },
         toggleShowSettings: (state) => {
-            state.showSettings = !state.showSettings;
+            state.expandedSideNav = !state.expandedSideNav;
         },
         setLanguage: (state, action: PayloadAction<string>) => {
             state.language = action.payload;
@@ -37,8 +37,8 @@ export const settingsSlice = createSlice({
     },
 });
 
-export const { setShowSettings, toggleShowSettings, setLanguage, setThemeId, setFetchNumberOfJumps } = settingsSlice.actions;
-export const selectShowSettings = (state: RootState) => state.settings.showSettings;
+export const { setExpandedSideNav, toggleShowSettings, setLanguage, setThemeId, setFetchNumberOfJumps } = settingsSlice.actions;
+export const selectExpandedSideNav = (state: RootState) => state.settings.expandedSideNav;
 export const selectLanguage = (state: RootState) => state.settings.language;
 export const selectThemeId = (state: RootState) => state.settings.themeId;
 export const selectFetchNumberOfJumps = (state: RootState) => state.settings.fetchNumberOfJumps;

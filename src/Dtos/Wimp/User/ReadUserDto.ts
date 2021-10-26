@@ -1,5 +1,6 @@
 
 export type ReadUserDto = {
     id: string,
-    username: Date
+    username: string,
+    roles: string[]
 }

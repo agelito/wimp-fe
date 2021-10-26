@@ -7,17 +7,21 @@ import settingsReducer from './Settings/settingsSlice';
 import universeReducer, { wimpUniverseApi } from './Universe/universeSlice';
 import charactersReducer from './Characters/charactersSlice';
 import authReducer from './Auth/authSlice';
+import adminReducer from './Admin/adminSlice';
 import { wimpAuthApi } from './Auth/authSlice';
+import { wimpAdminApi } from './Admin/adminSlice';
 
 const reducers = combineReducers({
     auth: authReducer,
     settings: settingsReducer,
     universe: universeReducer,
     picture: pictureReducer,
+    admin: adminReducer,
     characters: charactersReducer,
     [wimpAuthApi.reducerPath]: wimpAuthApi.reducer,
     [wimpUniverseApi.reducerPath]: wimpUniverseApi.reducer,
     [wimpPictureApi.reducerPath]: wimpPictureApi.reducer,
+    [wimpAdminApi.reducerPath]: wimpAdminApi.reducer,
     [esiCharactersApi.reducerPath]: esiCharactersApi.reducer,
 });
 
@@ -35,7 +39,7 @@ const store = configureStore({
         serializableCheck: {
             ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         }
-    }).concat([wimpAuthApi.middleware, wimpUniverseApi.middleware, wimpPictureApi.middleware, esiCharactersApi.middleware])
+    }).concat([wimpAuthApi.middleware, wimpUniverseApi.middleware, wimpPictureApi.middleware, wimpAdminApi.middleware, esiCharactersApi.middleware])
 });
 
 export type RootState = ReturnType<typeof store.getState>

@@ -21,7 +21,7 @@ const BaseUrl = process.env.REACT_APP_WIMP_API || window.location.origin;
 export const wimpPictureApi = createApi({
     reducerPath: 'wimpPictureApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: `${BaseUrl}/picture`,
+        baseUrl: `${BaseUrl}/api/picture`,
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).auth.token;
             if (token) {

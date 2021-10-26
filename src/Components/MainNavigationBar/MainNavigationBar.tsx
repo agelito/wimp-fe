@@ -23,7 +23,7 @@ function MainNavigationBar() {
 
     return (
         <Stack horizontal styles={mainNavigationBarContainerStyle} tokens={{ childrenGap: 16, padding: 8 }}>
-            <Stack disableShrink horizontal horizontalAlign={"start"}>
+            <Stack disableShrink horizontal horizontalAlign={"start"} verticalAlign={"center"}>
                 <IconButton
                     iconProps={{ iconName: "GlobalNavButton" }}
                     title={t("appbar_settings")}
@@ -43,12 +43,12 @@ function MainNavigationBar() {
                     }}
                 />
             </Stack>
-            <Stack horizontal grow horizontalAlign={"center"} className={"dragged"} tokens={{ childrenGap: 0, padding: 6 }}>
-                <Text nowrap block variant={"medium"}>
+            <Stack horizontal grow horizontalAlign={"center"} verticalAlign={"center"} className={"dragged"} tokens={{ childrenGap: 0, padding: 6 }}>
+                <Text nowrap block variant={"large"}>
                     {t("application_name")}
                 </Text>
             </Stack>
-            {isSignedIn ? <Stack horizontal horizontalAlign={"end"}>
+            {isSignedIn ? <Stack horizontal horizontalAlign={"end"} verticalAlign={"center"}>
                 <LogoutButton />
             </Stack> : <></>}
         </Stack>

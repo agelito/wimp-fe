@@ -1,6 +1,6 @@
 import { Route } from "react-router-dom";
 import Login from "./Pages/Auth/Login";
-import { selectToken } from "./State/Auth/authSlice";
+import { selectIsSignedIn } from "./State/Auth/authSlice";
 import { useAppSelector } from "./State/hooks";
 
 interface Props {
@@ -9,9 +9,8 @@ interface Props {
 }
 
 export const AuthenticatedRoute: React.FC<Props> = ({ path, exact, children }) => {
-    const token = useAppSelector(selectToken);
-
-    const modifiedChildren = token !== undefined ? children : <Login />
+    const isSignedIn = useAppSelector(selectIsSignedIn);
+    const modifiedChildren = isSignedIn ? children : <Login />
 
     return (
         <Route path={path} exact={exact}>

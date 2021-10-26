@@ -13,6 +13,7 @@ enum PasswordError {
 };
 
 function checkPasswordStrength(password: string): PasswordError | boolean {
+    if (!password) return true;
 
     // options.Password.RequireDigit = true;
     // options.Password.RequireLowercase = true;
@@ -91,8 +92,8 @@ export const Register: React.FC<Props> = () => {
     });
 
     const readyToSignIn = useMemo(() => {
-        return username?.length && password?.length;
-    }, [username, password]);
+        return username && password && password === confirmPassword;
+    }, [username, password, confirmPassword]);
 
     useEffect(() => {
         if (isSuccess) {
@@ -126,10 +127,10 @@ export const Register: React.FC<Props> = () => {
     }, [t]);
 
     const validateConfirmPassword = useCallback((value: string) => {
-        if (value && value === password) {
-            return ``;
-        } else {
+        if (value && value !== password) {
             return t(`register_error_password_mismatch`);
+        } else {
+            return ``;
         }
     }, [password, t]);
 

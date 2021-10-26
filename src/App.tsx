@@ -5,19 +5,22 @@ import { AuthenticatedRoute } from './AuthenticatedRoute';
 import { AppTitleBar } from './Components/AppTitleBar/AppTitleBar';
 import { IntelPicture } from './Components/IntelPicture/IntelPicture';
 import MainNavigationBar from './Components/MainNavigationBar/MainNavigationBar';
-import Settings from './Components/Settings/Settings';
+import SideNav from './Components/SideNav/SideNav';
 import { StarSystemPanel } from './Components/StarSystemPanel/StarSystemPanel';
 import { EsiDataServiceProvider } from './DataServices/EsiDataService/Hooks/EsiDataServiceProvider';
 import Register from './Pages/Auth/Register';
 import Home from './Pages/Home/Home';
-import { useAppDispatch, useAppSelector } from './State/hooks';
-import { selectShowSettings, selectThemeId, setShowSettings } from './State/Settings/settingsSlice';
+import Settings from './Pages/Settings/Settings';
+import Users from './Pages/Users/Users';
+import { selectIsSignedIn } from './State/Auth/authSlice';
+import { useAppSelector } from './State/hooks';
+import { selectExpandedSideNav, selectThemeId } from './State/Settings/settingsSlice';
 import { themes } from './Themes/themes';
 
 function App() {
-    const dispatch = useAppDispatch();
-    const showSettings = useAppSelector(selectShowSettings);
+    const expandedSideNav = useAppSelector(selectExpandedSideNav);
     const themeId = useAppSelector(selectThemeId);
+    const isSignedIn = useAppSelector(selectIsSignedIn);
 
     return (
         <EsiDataServiceProvider esiEndpoint={"https://esi.evetech.net"}>
@@ -25,17 +28,25 @@ function App() {
                 <Stack verticalFill={true} styles={{ root: { height: "100vh" } }}>
                     <Router>
                         {process.env.REACT_APP_IS_ELECTRON ? <AppTitleBar /> : <MainNavigationBar />}
-                        <IntelPicture />
-                        <Switch>
-                            <Route path="/register/:inviteKey?">
-                                <Register />
-                            </Route>
-                            <AuthenticatedRoute exact path="/">
-                                <Home />
-                            </AuthenticatedRoute>
+                        {isSignedIn ? <IntelPicture /> : <></>}
+                        <Stack horizontal verticalFill={true} styles={{ root: { width: "100%" } }}>
+                            <SideNav expanded={expandedSideNav} />
+                            <Switch>
+                                <Route path="/register/:inviteKey?">
+                                    <Register />
+                                </Route>
+                                <Route path="/settings">
+                                    <Settings />
+                                </Route>
+                                <AuthenticatedRoute path="/users">
+                                    <Users />
+                                </AuthenticatedRoute>
+                                <AuthenticatedRoute exact path="/">
+                                    <Home />
+                                </AuthenticatedRoute>
 
-                        </Switch>
-                        <Settings show={showSettings} handleClose={() => dispatch(setShowSettings(false))} />
+                            </Switch>
+                        </Stack>
                         <StarSystemPanel />
                     </Router>
                 </Stack>

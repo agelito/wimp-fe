@@ -91,6 +91,12 @@ function UniverseMap({ systemId, mapSize }: { systemId: number, mapSize: number 
             .force("link", d3.forceLink()
                 .id(n => (n as any).id));
 
+        return simulation;
+    }, []);
+
+    useEffect(() => {
+        if (!simulation) return;
+
         simulation.on('tick', () => {
             const nodes = simulation.nodes() as GraphNode[];
 
@@ -116,8 +122,12 @@ function UniverseMap({ systemId, mapSize }: { systemId: number, mapSize: number 
             }
         });
 
-        return simulation;
-    }, [positionLookupTable, visualEdgesReference]);
+        return () => {
+            console.log(`stop simulation`);
+            simulation.stop();
+        }
+
+    }, [positionLookupTable, simulation]);
 
     useEffect(() => {
         console.log(`updating graph simulation`);

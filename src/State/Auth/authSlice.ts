@@ -20,7 +20,7 @@ export const wimpAuthApi = createApi({
     reducerPath: 'wimpAuthApi',
     tagTypes: ['User'],
     baseQuery: fetchBaseQuery({
-        baseUrl: `${BaseUrl}/user`,
+        baseUrl: `${BaseUrl}/api/user`,
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).auth.token;
             if (token) {
@@ -70,7 +70,7 @@ export const authSlice = createSlice({
     extraReducers: (builder) => {
         builder.addMatcher(wimpAuthApi.endpoints.login.matchFulfilled, (state, { payload }) => { state.token = payload });
         builder.addMatcher(wimpAuthApi.endpoints.user.matchFulfilled, (state, { payload }) => { state.user = payload });
-        builder.addMatcher(wimpAuthApi.endpoints.user.matchRejected, (state) => { state.token = undefined; state.user = undefined; });
+        builder.addMatcher(wimpAuthApi.endpoints.user.matchRejected, (state) => { state.user = undefined; });
     },
 });
 
@@ -78,5 +78,18 @@ export const { setToken, setUser, logout } = authSlice.actions;
 export const { useLoginMutation, useRegisterMutation, useUserQuery } = wimpAuthApi
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectToken = (state: RootState) => state.auth.token;
-export const selectIsSignedIn = (state: RootState) => (state.auth.token?.expiration && Date.parse(state.auth.token.expiration) > Date.now()) === true;
+export const selectIsSignedIn = (state: RootState) => {
+    if (!state.auth.token) {
+        return false;
+    }
+
+    const tokenExpireDate = new Date(state.auth.token.expiration);
+    const currentDate = new Date();
+
+    if (tokenExpireDate.getTime() < currentDate.getTime()) {
+        return false;
+    }
+
+    return true;
+};
 export default authSlice.reducer;

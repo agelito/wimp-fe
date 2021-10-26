@@ -20,5 +20,5 @@ export const IntelPicture: React.FC = () => {
         dispatch(addPicture(data));
     }, [data, dispatch]);
 
-    return error ? <ErrorAlert messageId={"intel_picture_fetch_error_description"} /> : <></>;
+    return (isSignedIn && error) ? <ErrorAlert messageId={"intel_picture_fetch_error_description"} /> : <></>;
 }

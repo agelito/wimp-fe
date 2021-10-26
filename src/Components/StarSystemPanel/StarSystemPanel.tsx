@@ -15,7 +15,7 @@ export const StarSystemPanel: React.FC = () => {
 
     return (
         <Panel
-            style={{ marginTop: 34 }}
+            style={{ marginTop: 56 }}
             headerText={selectedSystem?.systemName}
             isBlocking={false}
             isOpen={selectedSystem !== undefined}
