@@ -1,5 +1,5 @@
 import { FontWeights, Link, mergeStyleSets, Modal, PrimaryButton, Spinner, SpinnerSize, Stack, TextField, useTheme, Text } from '@fluentui/react';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useRegisterMutation } from '../../State/Auth/authSlice';
@@ -61,7 +61,7 @@ export const Register: React.FC<Props> = () => {
     const [password, setPassword] = useState<string>(``);
     const [confirmPassword, setConfirmPassword] = useState<string>(``);
 
-    const [register, { isLoading, error, isSuccess }] = useRegisterMutation();
+    const [register, { isLoading, error }] = useRegisterMutation();
 
     const registerStyles = mergeStyleSets({
         page: {
@@ -95,19 +95,15 @@ export const Register: React.FC<Props> = () => {
         return username && password && password === confirmPassword;
     }, [username, password, confirmPassword]);
 
-    useEffect(() => {
-        if (isSuccess) {
-            history.push(`/`);
-        }
-    }, [history, isSuccess])
-
     const onRegisterClick = useCallback(() => {
         register({
             username,
             password,
             invite_key: inviteKey
+        }).then(() => {
+            history.push(`/`);
         });
-    }, [register, username, password, inviteKey]);
+    }, [register, username, password, inviteKey, history]);
 
     const validatePassword = useCallback((value: string) => {
         const result = checkPasswordStrength(value);

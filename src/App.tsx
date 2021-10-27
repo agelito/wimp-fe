@@ -1,10 +1,9 @@
 
 import { Stack, ThemeProvider } from '@fluentui/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { AuthenticatedRoute } from './AuthenticatedRoute';
-import { AppTitleBar } from './Components/AppTitleBar/AppTitleBar';
+import { AuthenticatedRoute } from './Components/Routes/AuthenticatedRoute';
 import { IntelPicture } from './Components/IntelPicture/IntelPicture';
-import MainNavigationBar from './Components/MainNavigationBar/MainNavigationBar';
+import MainTitleBar from './Components/MainTitleBar/MainTitleBar';
 import SideNav from './Components/SideNav/SideNav';
 import { StarSystemPanel } from './Components/StarSystemPanel/StarSystemPanel';
 import { EsiDataServiceProvider } from './DataServices/EsiDataService/Hooks/EsiDataServiceProvider';
@@ -16,6 +15,8 @@ import { selectIsSignedIn } from './State/Auth/authSlice';
 import { useAppSelector } from './State/hooks';
 import { selectExpandedSideNav, selectThemeId } from './State/Settings/settingsSlice';
 import { themes } from './Themes/themes';
+import { AdminRoute } from './Components/Routes/AdminRoute';
+import Login from './Pages/Auth/Login';
 
 function App() {
     const expandedSideNav = useAppSelector(selectExpandedSideNav);
@@ -27,20 +28,23 @@ function App() {
             <ThemeProvider applyTo="body" theme={themes.find(t => t.id === themeId)?.theme}>
                 <Stack verticalFill={true} styles={{ root: { height: "100vh" } }}>
                     <Router>
-                        {process.env.REACT_APP_IS_ELECTRON ? <AppTitleBar /> : <MainNavigationBar />}
+                        <MainTitleBar />
                         {isSignedIn ? <IntelPicture /> : <></>}
                         <Stack horizontal verticalFill={true} styles={{ root: { width: "100%" } }}>
                             <SideNav expanded={expandedSideNav} />
                             <Switch>
+                                <Route path="/login">
+                                    <Login />
+                                </Route>
                                 <Route path="/register/:inviteKey?">
                                     <Register />
                                 </Route>
                                 <Route path="/settings">
                                     <Settings />
                                 </Route>
-                                <AuthenticatedRoute path="/users">
+                                <AdminRoute path="/users">
                                     <Users />
-                                </AuthenticatedRoute>
+                                </AdminRoute>
                                 <AuthenticatedRoute exact path="/">
                                     <Home />
                                 </AuthenticatedRoute>

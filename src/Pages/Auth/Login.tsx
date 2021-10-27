@@ -2,6 +2,7 @@ import { FontWeights, mergeStyleSets, Modal, PrimaryButton, Spinner, SpinnerSize
 import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router';
 import { useLoginMutation } from '../../State/Auth/authSlice';
 
 function Login() {
@@ -13,7 +14,9 @@ function Login() {
     const [username, setUsername] = useState<string>(``);
     const [password, setPassword] = useState<string>(``);
 
-    const [login, { isLoading, error }] = useLoginMutation()
+    const [login, { isLoading, error }] = useLoginMutation();
+
+    const history = useHistory();
 
     const loginStyles = mergeStyleSets({
         page: {
@@ -51,8 +54,10 @@ function Login() {
         login({
             username,
             password
+        }).then(() => {
+            history.replace(`/`);
         });
-    }, [username, password, login]);
+    }, [login, username, password, history]);
 
     const errorMessage = useMemo(() => {
         if (!error) return undefined;
@@ -69,7 +74,8 @@ function Login() {
             <Modal
                 titleAriaId={t(`login_title_aria`)}
                 isOpen={isOpen}
-                isBlocking={true}
+                isModeless={true}
+                isBlocking={false}
                 containerClassName={loginStyles.container}
             >
                 <div className={loginStyles.header}>

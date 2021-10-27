@@ -6,7 +6,7 @@ import { useHistory } from "react-router";
 export const Navigation: React.FC = () => {
     const navStyles: Partial<INavStyles> = { root: { width: 'auto' } };
 
-    const { data: user } = useUserQuery({});
+    const { data: user } = useUserQuery();
     const history = useHistory();
 
     const navLinkGroups = useMemo(() => {

@@ -1,6 +1,7 @@
-import { buildColumns, ConstrainMode, DetailsListLayoutMode, IColumn, SelectionMode, ShimmeredDetailsList, Stack, StackItem, TextField } from '@fluentui/react';
+import { buildColumns, ConstrainMode, DetailsListLayoutMode, IColumn, SelectionMode, ShimmeredDetailsList, Stack, StackItem, Selection } from '@fluentui/react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { UserCommands } from '../../Components/Admin/UserCommands';
 import { ReadUserDto } from '../../Dtos/Wimp/User/ReadUserDto';
 import { useUsersQuery } from '../../State/Admin/adminSlice';
 
@@ -10,7 +11,7 @@ export const Users: React.FC = () => {
 
     const { t } = useTranslation();
 
-    const [filterName, setFilterName] = useState<string>(``);
+    const [filterName] = useState<string>(``);
 
     const pages = useMemo<Map<number, ReadUserDto[]>>(() => new Map(), []);
     const users = useMemo<(ReadUserDto | null)[]>(() => {
@@ -34,6 +35,8 @@ export const Users: React.FC = () => {
 
     const filteredUsers = useMemo<(ReadUserDto | null)[]>(() => users.filter(u => filterName.length === 0 || (u && u.username.toLowerCase().indexOf(filterName.toLowerCase()) >= 0)), [users, filterName]);
 
+    const [selectedUser, setSelectedUser] = useState<ReadUserDto>();
+
     useEffect(() => {
         if (isFetching || !usersPage) return;
 
@@ -56,9 +59,33 @@ export const Users: React.FC = () => {
         return item[column.key as keyof ReadUserDto];
     }, []);
 
+    const selection = useMemo(() => {
+        var sel: Selection | undefined = undefined;
+
+        sel = new Selection({
+            onSelectionChanged: () => {
+                if (!sel) return;
+
+                if (sel.getSelectedCount()) {
+                    setSelectedUser(sel.getSelection()[0] as ReadUserDto);
+                } else {
+                    setSelectedUser(undefined);
+                }
+            }
+        });
+
+        return sel;
+    }, []);
+
     return (
         <Stack grow tokens={{ padding: 16 }}>
-            <TextField label={t(`users_list_filter_by_name`)} value={filterName} onChange={(_event, value) => setFilterName(value ?? ``)} />
+            <UserCommands selectedUser={selectedUser} onUpdateUsers={() => {
+                selection.setAllSelected(false);
+                setSelectedUser(undefined);
+
+                setPage(0);
+            }} />
+            { /* <TextField label={t(`users_list_filter_by_name`)} value={filterName} onChange={(_event, value) => setFilterName(value ?? ``)} /> */}
             <StackItem style={{ maxWidth: "99%", position: "relative" }}>
                 <ShimmeredDetailsList
                     setKey="items"
@@ -71,6 +98,7 @@ export const Users: React.FC = () => {
                     enableShimmer={false}
                     ariaLabelForShimmer="Content is being fetched"
                     ariaLabelForGrid="Item details"
+                    selection={selection}
                     listProps={{
                         renderedWindowsAhead: 0,
                         renderedWindowsBehind: 0,

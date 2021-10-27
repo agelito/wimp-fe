@@ -30,7 +30,7 @@ export const wimpAuthApi = createApi({
         }
     }),
     endpoints: (builder) => ({
-        user: builder.query<ReadUserDto, {}>({
+        user: builder.query<ReadUserDto, void>({
             query: () => ({ url: `/` }),
             providesTags: [`User`],
         }),
