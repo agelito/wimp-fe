@@ -71,6 +71,7 @@
     "@types/react-world-flags": "^1.4.2",
     "electron": "^15.2.0",
     "foreman": "^3.0.1",
+    "http-proxy-middleware": "^2.0.1",
     "standard-version": "^9.3.2"
   }
 }
