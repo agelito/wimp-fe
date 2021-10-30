@@ -9,10 +9,17 @@ export const IntelPicture: React.FC = () => {
 
     const isSignedIn = useAppSelector(selectIsSignedIn);
 
-    const { data, error } = useGetPictureQuery({}, {
-        skip: !isSignedIn,
-        pollingInterval: 3000,
-    });
+    const { data, error, refetch } = useGetPictureQuery({}, {});
+
+    useEffect(() => {
+        if (!isSignedIn) return;
+
+        const pollingInterval = setInterval(() => refetch(), 3000);
+
+        return () => {
+            clearInterval(pollingInterval);
+        }
+    }, [refetch, isSignedIn]);
 
     useEffect(() => {
         if (!data) return;

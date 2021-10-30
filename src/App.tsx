@@ -2,7 +2,6 @@
 import { Stack, ThemeProvider } from '@fluentui/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { AuthenticatedRoute } from './Components/Routes/AuthenticatedRoute';
-import { IntelPicture } from './Components/IntelPicture/IntelPicture';
 import MainTitleBar from './Components/MainTitleBar/MainTitleBar';
 import SideNav from './Components/SideNav/SideNav';
 import { StarSystemPanel } from './Components/StarSystemPanel/StarSystemPanel';
@@ -11,7 +10,6 @@ import Register from './Pages/Auth/Register';
 import Home from './Pages/Home/Home';
 import Settings from './Pages/Settings/Settings';
 import Users from './Pages/Users/Users';
-import { selectIsSignedIn } from './State/Auth/authSlice';
 import { useAppSelector } from './State/hooks';
 import { selectExpandedSideNav, selectThemeId } from './State/Settings/settingsSlice';
 import { themes } from './Themes/themes';
@@ -21,7 +19,6 @@ import Login from './Pages/Auth/Login';
 function App() {
     const expandedSideNav = useAppSelector(selectExpandedSideNav);
     const themeId = useAppSelector(selectThemeId);
-    const isSignedIn = useAppSelector(selectIsSignedIn);
 
     return (
         <EsiDataServiceProvider esiEndpoint={"https://esi.evetech.net"}>
@@ -29,7 +26,6 @@ function App() {
                 <Stack verticalFill={true} styles={{ root: { height: "100vh" } }}>
                     <Router>
                         <MainTitleBar />
-                        {isSignedIn ? <IntelPicture /> : <></>}
                         <Stack horizontal verticalFill={true} styles={{ root: { width: "100%" } }}>
                             <SideNav expanded={expandedSideNav} />
                             <Switch>
@@ -48,7 +44,6 @@ function App() {
                                 <AuthenticatedRoute exact path="/">
                                     <Home />
                                 </AuthenticatedRoute>
-
                             </Switch>
                         </Stack>
                         <StarSystemPanel />

@@ -1,4 +1,5 @@
 import { IStackStyles, Stack, useTheme } from '@fluentui/react';
+import { IntelPicture } from '../../Components/IntelPicture/IntelPicture';
 import UniverseMap from '../../Components/UniverseMap/UniverseMap';
 import { useAppSelector } from '../../State/hooks';
 import { selectFetchNumberOfJumps } from '../../State/Settings/settingsSlice';
@@ -20,6 +21,7 @@ function Home() {
 
   return (
     <Stack grow styles={homeContainerStyle}>
+      <IntelPicture />
       <UniverseMap systemId={locatedAt} mapSize={mapSize} />
     </Stack>
   );
