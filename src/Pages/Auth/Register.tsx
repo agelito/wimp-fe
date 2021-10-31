@@ -1,7 +1,7 @@
 import { FontWeights, Link, mergeStyleSets, Modal, PrimaryButton, Spinner, SpinnerSize, Stack, TextField, useTheme, Text } from '@fluentui/react';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useRegisterMutation } from '../../State/Auth/authSlice';
 
 enum PasswordError {
@@ -54,8 +54,15 @@ export const Register: React.FC<Props> = () => {
     const [isOpen] = useState(true);
 
     const history = useHistory();
+    const location = useLocation();
 
-    const { inviteKey } = useParams<{ inviteKey: string }>();
+    const inviteKey = useMemo(() => {
+        const params = new URLSearchParams(location.search);
+        return params.get(`inviteKey`);
+    }, [location]);
+
+    const params = new URLSearchParams(location.search);
+    console.log(params.get("s"));
 
     const [username, setUsername] = useState<string>(``);
     const [password, setPassword] = useState<string>(``);
@@ -99,7 +106,7 @@ export const Register: React.FC<Props> = () => {
         register({
             username,
             password,
-            invite_key: inviteKey
+            invite_key: inviteKey ?? ``
         }).then(() => {
             history.push(`/`);
         });

@@ -14,7 +14,7 @@ export const InviteLinkGenerator: React.FC<Props> = ({ target, onDismiss }) => {
     const [invite, { isLoading, data, error }] = useInviteMutation();
 
     const registerLink = useMemo(() => {
-        return `${window.location.origin}/register/${data?.key}`
+        return `${window.location.origin}/register?inviteKey=${data?.key}`
     }, [data]);
 
     useEffect(() => {
@@ -59,7 +59,7 @@ export const InviteLinkGenerator: React.FC<Props> = ({ target, onDismiss }) => {
                             </StackItem>
                             <StackItem>
                                 <IconButton
-                                    title={`invite_link_copy_clipboard`}
+                                    title={`copy_to_clipboard`}
                                     iconProps={{ iconName: `Copy` }}
                                     onClick={() => { copyToClipboard() }}
                                 />
