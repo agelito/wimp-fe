@@ -61,9 +61,6 @@ export const Register: React.FC<Props> = () => {
         return params.get(`inviteKey`);
     }, [location]);
 
-    const params = new URLSearchParams(location.search);
-    console.log(params.get("s"));
-
     const [username, setUsername] = useState<string>(``);
     const [password, setPassword] = useState<string>(``);
     const [confirmPassword, setConfirmPassword] = useState<string>(``);
