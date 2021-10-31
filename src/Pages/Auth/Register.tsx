@@ -1,5 +1,6 @@
 import { FontWeights, Link, mergeStyleSets, Modal, PrimaryButton, Spinner, SpinnerSize, Stack, TextField, useTheme, Text } from '@fluentui/react';
-import { useCallback, useMemo, useState } from 'react';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useRegisterMutation } from '../../State/Auth/authSlice';
@@ -65,7 +66,9 @@ export const Register: React.FC<Props> = () => {
     const [password, setPassword] = useState<string>(``);
     const [confirmPassword, setConfirmPassword] = useState<string>(``);
 
-    const [register, { isLoading, error }] = useRegisterMutation();
+    const [register, { data, isLoading, error }] = useRegisterMutation();
+
+    const [registerError, setRegisterError] = useState<string>();
 
     const registerStyles = mergeStyleSets({
         page: {
@@ -104,10 +107,17 @@ export const Register: React.FC<Props> = () => {
             username,
             password,
             invite_key: inviteKey ?? ``
-        }).then(() => {
-            history.push(`/`);
         });
-    }, [register, username, password, inviteKey, history]);
+    }, [register, username, password, inviteKey]);
+
+    useEffect(() => {
+        if (data) {
+            history.push(`/`);
+        } else if (error) {
+            const reason = (error as FetchBaseQueryError)?.data as string;
+            setRegisterError(reason ?? t(`register_error_generic`));
+        }
+    }, [data, error, history, t]);
 
     const validatePassword = useCallback((value: string) => {
         const result = checkPasswordStrength(value);
@@ -134,12 +144,6 @@ export const Register: React.FC<Props> = () => {
         }
     }, [password, t]);
 
-    const passwordErrorMessage = useMemo(() => {
-        if (!error) return undefined;
-
-        return t(`register_error_generic`);
-    }, [error, t]);
-
     return (
         <Stack grow className={registerStyles.page}>
             <Modal
@@ -160,7 +164,9 @@ export const Register: React.FC<Props> = () => {
                                 label={t(`register_username_label`)}
                                 placeholder={t(`register_username_placeholder`)}
                                 required iconProps={{ iconName: `People` }}
-                                onChange={(_, value) => setUsername(value ?? ``)} />
+                                onChange={(_, value) => setUsername(value ?? ``)}
+                                errorMessage={registerError}
+                            />
                             <TextField
                                 name={"password"}
                                 value={password}
@@ -171,8 +177,7 @@ export const Register: React.FC<Props> = () => {
                                 canRevealPassword
                                 revealPasswordAriaLabel={t(`register_password_reveal_aria`)}
                                 onChange={(_, value) => setPassword(value ?? ``)}
-                                onGetErrorMessage={validatePassword}
-                                errorMessage={passwordErrorMessage} />
+                                onGetErrorMessage={validatePassword} />
                             <TextField
                                 name={"confirm_password"}
                                 value={confirmPassword}
@@ -183,8 +188,7 @@ export const Register: React.FC<Props> = () => {
                                 canRevealPassword
                                 revealPasswordAriaLabel={t(`register_password_reveal_aria`)}
                                 onChange={(_, value) => setConfirmPassword(value ?? ``)}
-                                onGetErrorMessage={validateConfirmPassword}
-                                errorMessage={passwordErrorMessage} />
+                                onGetErrorMessage={validateConfirmPassword} />
                         </Stack>
                         <Stack horizontal horizontalAlign={"end"}>
                             {!isLoading ? <PrimaryButton
