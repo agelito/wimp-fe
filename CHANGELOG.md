@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://github.com/agelito/wimp-fe/compare/v0.1.2...v0.1.3) (2021-10-31)
+
+
+### Bug Fixes
+
+* display registration errors ([2f28f89](https://github.com/agelito/wimp-fe/commit/2f28f89ed99a543a60036473c93f533808045433))
+* grow setup intel page to fill window ([9fe1442](https://github.com/agelito/wimp-fe/commit/9fe1442f77be4e16a61d7f6f542225eaf39b840c))
+
 ### [0.1.2](https://github.com/agelito/wimp-fe/compare/v0.1.1...v0.1.2) (2021-10-31)
 
 
