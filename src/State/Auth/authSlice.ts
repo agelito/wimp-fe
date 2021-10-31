@@ -5,6 +5,7 @@ import { LoginUserDto } from "../../Dtos/Wimp/User/LoginUserDto";
 import { ReadTokenDto } from "../../Dtos/Wimp/User/ReadTokenDto";
 import { ReadUserDto } from "../../Dtos/Wimp/User/ReadUserDto";
 import { RegisterUserDto } from "../../Dtos/Wimp/User/RegisterUserDto";
+import { ReadApiKeyDto } from "../../Dtos/Wimp/User/ReadApiKeyDto";
 
 interface AuthState {
     user?: ReadUserDto
@@ -18,7 +19,7 @@ const BaseUrl = process.env.REACT_APP_WIMP_API || window.location.origin;
 
 export const wimpAuthApi = createApi({
     reducerPath: 'wimpAuthApi',
-    tagTypes: ['User'],
+    tagTypes: ['User', 'API Key'],
     baseQuery: fetchBaseQuery({
         baseUrl: `${BaseUrl}/api/user`,
         prepareHeaders: (headers, { getState }) => {
@@ -48,6 +49,17 @@ export const wimpAuthApi = createApi({
                 method: `POST`,
                 body: register
             }),
+        }),
+        apiKey: builder.query<ReadApiKeyDto[], void>({
+            query: () => ({ url: `/key` }),
+            providesTags: ['API Key']
+        }),
+        createApiKey: builder.mutation<ReadApiKeyDto, void>({
+            query: () => ({
+                url: `/key`,
+                method: `POST`
+            }),
+            invalidatesTags: ['API Key']
         })
     }),
 });
@@ -75,7 +87,7 @@ export const authSlice = createSlice({
 });
 
 export const { setToken, setUser, logout } = authSlice.actions;
-export const { useLoginMutation, useRegisterMutation, useUserQuery } = wimpAuthApi
+export const { useLoginMutation, useRegisterMutation, useUserQuery, useApiKeyQuery, useCreateApiKeyMutation } = wimpAuthApi
 export const selectUser = (state: RootState) => state.auth.user;
 export const selectToken = (state: RootState) => state.auth.token;
 export const selectIsSignedIn = (state: RootState) => {

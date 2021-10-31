@@ -1,7 +1,8 @@
 import { INavLink, INavStyles, Nav } from "@fluentui/react";
-import { useUserQuery } from "../../State/Auth/authSlice";
+import { selectIsSignedIn, useUserQuery } from "../../State/Auth/authSlice";
 import { useMemo } from "react";
 import { useHistory } from "react-router";
+import { useAppSelector } from "../../State/hooks";
 
 export const Navigation: React.FC = () => {
     const navStyles: Partial<INavStyles> = { root: { width: 'auto' } };
@@ -9,14 +10,21 @@ export const Navigation: React.FC = () => {
     const { data: user } = useUserQuery();
     const history = useHistory();
 
-    const navLinkGroups = useMemo(() => {
+    const isSignedIn = useAppSelector(selectIsSignedIn);
 
+    const navLinkGroups = useMemo(() => {
         const links: INavLink[] = [
             {
                 name: `Intel`,
                 key: `key_intel`,
-                icon: `Home`,
+                icon: `SeeDo`,
                 url: `/`
+            },
+            {
+                name: `Reporting`,
+                key: `key_intel_reporting`,
+                icon: `Send`,
+                url: `/intel-reporting`
             },
             {
                 name: `Settings`,
@@ -26,7 +34,7 @@ export const Navigation: React.FC = () => {
             }
         ];
 
-        if (user?.roles.filter(r => r === `Admin`).length) {
+        if (isSignedIn && user?.roles.filter(r => r === `Admin`).length) {
             links.push(
                 ...[
                     {
@@ -35,18 +43,18 @@ export const Navigation: React.FC = () => {
                         icon: `People`,
                         url: `/users`,
                     },
-                    {
+                    /*{
                         name: 'Integrations',
                         key: 'key_integrations',
                         icon: `Link`,
                         url: `/integrations`,
-                    },
+                    },*/
                 ],
             );
         }
 
         return [{ links }];
-    }, [user]);
+    }, [isSignedIn, user?.roles]);
 
     return (
         <Nav

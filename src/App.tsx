@@ -15,6 +15,7 @@ import { selectExpandedSideNav, selectThemeId } from './State/Settings/settingsS
 import { themes } from './Themes/themes';
 import { AdminRoute } from './Components/Routes/AdminRoute';
 import Login from './Pages/Auth/Login';
+import { SetupIntelReporting } from './Pages/ReportIntel/SetupIntelReporting';
 
 function App() {
     const expandedSideNav = useAppSelector(selectExpandedSideNav);
@@ -26,7 +27,7 @@ function App() {
                 <Stack verticalFill={true} styles={{ root: { height: "100vh" } }}>
                     <Router>
                         <MainTitleBar />
-                        <Stack horizontal verticalFill={true} styles={{ root: { width: "100%" } }}>
+                        <Stack horizontal verticalFill={true} styles={{ root: { width: "100%", overflow: "hidden" } }}>
                             <SideNav expanded={expandedSideNav} />
                             <Switch>
                                 <Route path="/login">
@@ -41,6 +42,9 @@ function App() {
                                 <AdminRoute path="/users">
                                     <Users />
                                 </AdminRoute>
+                                <AuthenticatedRoute path="/intel-reporting">
+                                    <SetupIntelReporting />
+                                </AuthenticatedRoute>
                                 <AuthenticatedRoute exact path="/">
                                     <Home />
                                 </AuthenticatedRoute>
