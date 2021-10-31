@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.1](https://github.com/agelito/wimp-fe/compare/v0.1.0...v0.1.1) (2021-10-31)
+
+
+### Features
+
+* add page for intel reporting setup ([abb64aa](https://github.com/agelito/wimp-fe/commit/abb64aa65b7795e4a8615c1bc95008be09b57d05))
+* implement users page and title bar improvements ([734519e](https://github.com/agelito/wimp-fe/commit/734519e261501b3a29b4fc4b835d79a047488922))
+* roles and admin pages ([229a2fc](https://github.com/agelito/wimp-fe/commit/229a2fc7a358bfb36da1fe4bdad6cb5d8502bb8f))
+
+
+### Bug Fixes
+
+* add authentication to universe api ([8d3492d](https://github.com/agelito/wimp-fe/commit/8d3492de249ecb01a94f2630218a2a8f07189dbb))
+* only request intel picture when signed in ([9239e62](https://github.com/agelito/wimp-fe/commit/9239e6248cff72b67da53f1cab6b03fbab75ecc4))
+
 ## 0.1.0 (2021-10-23)
 
 
