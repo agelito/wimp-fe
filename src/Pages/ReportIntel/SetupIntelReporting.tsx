@@ -70,6 +70,7 @@ export const SetupIntelReporting: React.FC = () => {
 
     return (
         <Stack
+            grow
             tokens={{ childrenGap: 16, padding: 16 }}
             className={styles.container}>
 
