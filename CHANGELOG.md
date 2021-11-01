@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.5](https://github.com/agelito/wimp-fe/compare/v0.1.4...v0.1.5) (2021-11-01)
+
+
+### Bug Fixes
+
+* build_args -> build-args ([68161a5](https://github.com/agelito/wimp-fe/commit/68161a5bf87f56d1e75939649e28665329723291))
+
 ### [0.1.4](https://github.com/agelito/wimp-fe/compare/v0.1.3...v0.1.4) (2021-11-01)
 
 
