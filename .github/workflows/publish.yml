@@ -40,3 +40,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build_args: REACT_APP_GA_ID=${{ secrets.GA_ID }}
