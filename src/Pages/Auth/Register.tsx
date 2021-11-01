@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useRegisterMutation } from '../../State/Auth/authSlice';
+import ReactGA from 'react-ga';
 
 enum PasswordError {
     TooShort,
@@ -113,6 +114,11 @@ export const Register: React.FC<Props> = () => {
     useEffect(() => {
         if (data) {
             history.push(`/`);
+
+            ReactGA.event({
+                category: 'User',
+                action: 'Created an Account'
+            });
         } else if (error) {
             const reason = (error as FetchBaseQueryError)?.data as string;
             setRegisterError(reason ?? t(`register_error_generic`));
