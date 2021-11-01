@@ -6,6 +6,8 @@ import { ChannelNamesTable } from "../../Components/IntelReporting/ChannelNamesT
 import { useApiKeyQuery } from "../../State/Auth/authSlice";
 import "./SetupIntelReporting.css";
 
+const DEFAULT_LOG_DIRECTORY = `C:\\Users\\%username%\\Documents\\EVE\\logs\\Chatlogs`;
+
 export const SetupIntelReporting: React.FC = () => {
     const styles = mergeStyleSets({
         container: {
@@ -23,7 +25,7 @@ export const SetupIntelReporting: React.FC = () => {
 
     const { t } = useTranslation();
 
-    const [intelLogDirectory, setIntelLogDirectory] = useState(`C:\\Users\\(UserName)\\Documents\\EVE\\logs\\Chatlogs`);
+    const [intelLogDirectory, setIntelLogDirectory] = useState(DEFAULT_LOG_DIRECTORY);
     const [intelChannels, setIntelChannels] = useState<string[]>([`INTEL.RC`, `WOMP intel`]);
     const { data: apiKeyData } = useApiKeyQuery();
 
@@ -34,7 +36,7 @@ export const SetupIntelReporting: React.FC = () => {
     const determineIntelChannels = useCallback((fileList: FileList | null) => {
         var fileCount = fileList?.length;
         if (!fileList || !fileCount) {
-            setIntelLogDirectory(`C:\\Users\\(UserName)\\Documents\\EVE\\logs\\Chatlogs`);
+            setIntelLogDirectory(DEFAULT_LOG_DIRECTORY);
             setIntelChannels([]);
             return;
         }

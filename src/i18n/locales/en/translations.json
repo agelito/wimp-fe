@@ -86,7 +86,7 @@
     "intel_reporting_3_title": "3. Configure WIMP-Intellog",
     "intel_reporting_3_1": "WIMP-Intellog relies on a configuration file for configuration. The section below will help you generate the necessary configuration.",
     "intel_reporting_3_2_title": "EVE Chat Log Directory",
-    "intel_reporting_3_2": "Use the text field to select where the EVE chat log directory is located. On most systems just replacing the (UserName) part will be enough.",
+    "intel_reporting_3_2": "Use the text field to select where the EVE chat log directory is located. On most systems the default path specified below will be sufficient.",
     "intel_reporting_3_3": "Use the file input to select which intel log files to observe. The selected filenames will be added to the generated configuration. Skip this step if \"WOMP intel\" and \"INTEL.RC\" is sufficient.",
     "intel_reporting_3_4_title": "Configuration File",
     "intel_reporting_3_4": "Copy the generated configuration below and save in a file called \"Config.json\" next to \"WIMP-Intellog.exe\" file downloaded earlier.",
