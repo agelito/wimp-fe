@@ -6,7 +6,7 @@ import { ChannelNamesTable } from "../../Components/IntelReporting/ChannelNamesT
 import { useApiKeyQuery } from "../../State/Auth/authSlice";
 import "./SetupIntelReporting.css";
 
-const DEFAULT_LOG_DIRECTORY = `C:\\Users\\%username%\\Documents\\EVE\\logs\\Chatlogs`;
+const DEFAULT_LOG_DIRECTORY = `%USERPROFILE%\\Documents\\EVE\\logs\\Chatlogs`;
 
 export const SetupIntelReporting: React.FC = () => {
     const styles = mergeStyleSets({
