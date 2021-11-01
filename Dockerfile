@@ -1,5 +1,7 @@
 FROM node:14.8.0-alpine as build
 
+ARG REACT_APP_GA_ID
+
 WORKDIR /app
 
 ENV PATH /app/node_modules/.bin:$PATH

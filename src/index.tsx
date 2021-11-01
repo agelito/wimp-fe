@@ -9,6 +9,12 @@ import store from './State/store';
 import { persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { initializeIcons } from '@fluentui/react/lib/Icons';
+import ReactGA from 'react-ga';
+import { Metric } from 'web-vitals';
+
+if (process.env.REACT_APP_GA_ID) {
+    ReactGA.initialize(process.env.REACT_APP_GA_ID);
+}
 
 const persistor = persistStore(store);
 
@@ -25,4 +31,14 @@ ReactDOM.render(
     document.getElementById('root')
 );
 
-reportWebVitals();
+function sendToAnalytics({ id, name, value }: Metric) {
+    ReactGA.ga('send', 'event', {
+        eventCategory: 'Web Vitals',
+        eventAction: name,
+        eventValue: Math.round(name === 'CLS' ? value * 1000 : value),
+        eventLabel: id,
+        nonInteraction: true,
+    });
+}
+
+reportWebVitals(sendToAnalytics);

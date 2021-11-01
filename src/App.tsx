@@ -16,6 +16,7 @@ import { themes } from './Themes/themes';
 import { AdminRoute } from './Components/Routes/AdminRoute';
 import Login from './Pages/Auth/Login';
 import { SetupIntelReporting } from './Pages/ReportIntel/SetupIntelReporting';
+import { RouteChangeTracker } from './Components/Routes/RouteChangeTracker';
 
 function App() {
     const expandedSideNav = useAppSelector(selectExpandedSideNav);
@@ -26,6 +27,7 @@ function App() {
             <ThemeProvider applyTo="body" theme={themes.find(t => t.id === themeId)?.theme}>
                 <Stack verticalFill={true} styles={{ root: { height: "100vh" } }}>
                     <Router>
+                        <RouteChangeTracker />
                         <MainTitleBar />
                         <Stack horizontal verticalFill={true} styles={{ root: { width: "100%", overflow: "hidden" } }}>
                             <SideNav expanded={expandedSideNav} />
