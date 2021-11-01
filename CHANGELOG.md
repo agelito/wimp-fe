@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.4](https://github.com/agelito/wimp-fe/compare/v0.1.3...v0.1.4) (2021-11-01)
+
+
+### Features
+
+* add google analytics ([#13](https://github.com/agelito/wimp-fe/issues/13)) ([9326423](https://github.com/agelito/wimp-fe/commit/932642393956deb590f398ecef0751417b7b2f4c))
+
 ### [0.1.3](https://github.com/agelito/wimp-fe/compare/v0.1.2...v0.1.3) (2021-10-31)
 
 
