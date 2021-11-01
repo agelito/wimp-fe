@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.6](https://github.com/agelito/wimp-fe/compare/v0.1.5...v0.1.6) (2021-11-01)
+
+
+### Bug Fixes
+
+* add analytics for user registration ([2d2b72a](https://github.com/agelito/wimp-fe/commit/2d2b72a855db58025467e57a88438a063a259b9c))
+
 ### [0.1.5](https://github.com/agelito/wimp-fe/compare/v0.1.4...v0.1.5) (2021-11-01)
 
 
