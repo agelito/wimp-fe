@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://github.com/agelito/wimp-fe/compare/v0.1.6...v0.1.7) (2021-11-01)
+
+
+### Bug Fixes
+
+* use userprofile variable in default log directory path ([#15](https://github.com/agelito/wimp-fe/issues/15)) ([3f46683](https://github.com/agelito/wimp-fe/commit/3f466831eb079ab5450834c3deb2ebf414830990))
+* username variable in default log directory ([#14](https://github.com/agelito/wimp-fe/issues/14)) ([2bae4be](https://github.com/agelito/wimp-fe/commit/2bae4bed0d4f0bee62f5a7c385b46b3f5208df56))
+
 ### [0.1.6](https://github.com/agelito/wimp-fe/compare/v0.1.5...v0.1.6) (2021-11-01)
 
 
