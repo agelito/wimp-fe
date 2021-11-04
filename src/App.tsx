@@ -3,7 +3,6 @@ import { Stack, ThemeProvider } from '@fluentui/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { AuthenticatedRoute } from './Components/Routes/AuthenticatedRoute';
 import MainTitleBar from './Components/MainTitleBar/MainTitleBar';
-import SideNav from './Components/SideNav/SideNav';
 import { StarSystemPanel } from './Components/StarSystemPanel/StarSystemPanel';
 import { EsiDataServiceProvider } from './DataServices/EsiDataService/Hooks/EsiDataServiceProvider';
 import Register from './Pages/Auth/Register';
@@ -17,6 +16,7 @@ import { AdminRoute } from './Components/Routes/AdminRoute';
 import Login from './Pages/Auth/Login';
 import { SetupIntelReporting } from './Pages/ReportIntel/SetupIntelReporting';
 import { RouteChangeTracker } from './Components/Routes/RouteChangeTracker';
+import SideNav from './Components/Navigation/SideNav';
 
 function App() {
     const expandedSideNav = useAppSelector(selectExpandedSideNav);

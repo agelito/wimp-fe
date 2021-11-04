@@ -9,11 +9,15 @@ interface PictureState {
     generatedDate?: string,
     characterIntel: ReadIntelDto[];
     statusIntel: ReadIntelDto[];
+    newIntelEntries: ReadIntelDto[];
+    movedIntelEntries: ReadIntelDto[];
 };
 
 const initialState: PictureState = {
     characterIntel: [],
     statusIntel: [],
+    newIntelEntries: [],
+    movedIntelEntries: [],
 };
 
 const BaseUrl = process.env.REACT_APP_WIMP_API || window.location.origin;
@@ -55,11 +59,21 @@ export const pictureSlice = createSlice({
                 .filter(ci => Date.parse(ci.timestamp) > removeAfterUtcMillis)
                 .map(ci => [ci.character.id, ci]));
 
+            var newIntel =
+                sortedIntel.filter(i => i.character && !characters.get(i.character.id));
+
+            var lastKnownLocations = new Map<number, number>();
+            characters.forEach(i => lastKnownLocations.set(i.character.id, i.starSystem.id));
+
             sortedIntel
                 .filter(i => i.character)
                 .forEach(i => {
                     characters.set(i.character.id, i);
                 });
+
+            var movedIntel = Array.from(characters.values())
+                .filter(i => i.character && lastKnownLocations.get(i.character.id))
+                .filter(i => lastKnownLocations.get(i.character.id) !== i.starSystem.id);
 
             var withoutCharacters = new Map(state.statusIntel
                 .filter(ci => Date.parse(ci.timestamp) > removeAfterUtcMillis)
@@ -73,6 +87,8 @@ export const pictureSlice = createSlice({
 
             state.characterIntel = Array.from(characters.values());
             state.statusIntel = Array.from(withoutCharacters.values());
+            state.newIntelEntries = Array.from(newIntel.values());
+            state.movedIntelEntries = Array.from(movedIntel.values());
             state.generatedDate = picture.generated_time;
         },
         removeReportsOlderThanMinutes: (state, action: PayloadAction<number>) => {
@@ -88,8 +104,6 @@ export const pictureSlice = createSlice({
     }
 });
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
 export const { useGetPictureQuery } = wimpPictureApi
 
 export const { addPicture, removeReportsOlderThanMinutes } = pictureSlice.actions;

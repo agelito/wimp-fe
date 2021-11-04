@@ -8,7 +8,7 @@ import { SystemData } from './UniverseMap';
 import "./MapNode.css";
 import { interpolateRgbBasis } from "d3-interpolate";
 import { getCurrentDateUTC } from '../../Utils/DateUtils';
-import { RadialProgressIndicator } from '../RadialProgressIndicator/RadialProgressIndicator';
+import { RadialProgressIndicator } from '../ProgressIndicator/RadialProgressIndicator';
 import { useIntelInSystem } from '../../Hooks/Intel/useIntelInSystem';
 import { selectLocatedAtSystemId, selectSelectedSystemId } from '../../State/Universe/universeSlice';
 

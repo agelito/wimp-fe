@@ -1,7 +1,7 @@
 import ReactFlow, { Controls, Edge, Node } from "react-flow-renderer";
 import { SimulationLinkDatum, SimulationNodeDatum } from "d3-force";
 import * as d3 from "d3";
-import { deselectSystem, moveToSystem, selectSelectedSystemId, selectSystem, useGetUniverseGraphWithinJumpsQuery } from "../../State/Universe/universeSlice";
+import { deselectSystem, moveToSystem, selectSelectedSystemId, selectSystem, setStarSystems, useGetUniverseGraphWithinJumpsQuery } from "../../State/Universe/universeSlice";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MapNode from "./MapNode";
 import { LoadingData } from "./LoadingData";
@@ -33,6 +33,10 @@ function UniverseMap({ systemId, mapSize }: { systemId: number, mapSize: number 
     const positionLookupTable = useMemo<Map<number, { x: number, y: number }>>(() => new Map(), []);
 
     const [graphVisualState, setGraphVisualState] = useState<GraphState>();
+
+    useEffect(() => {
+        dispatch(setStarSystems(data?.systems ?? []));
+    }, [data, dispatch]);
 
     const graphSimulationState = useMemo(() => {
         if (!data) return;

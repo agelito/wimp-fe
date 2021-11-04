@@ -1,7 +1,8 @@
 import { Slider, Stack } from '@fluentui/react';
 import { useTranslation } from 'react-i18next';
-import { LanguageSelect } from '../../Components/LanguageSelect/LanguageSelect';
-import { SelectTheme } from '../../Components/SelectTheme/SelectTheme';
+import { SelectEnableNotifications } from '../../Components/Settings/SelectEnableNotifications';
+import { SelectLanguage } from '../../Components/Settings/SelectLanguage';
+import { SelectTheme } from '../../Components/Settings/SelectTheme';
 import { useAppDispatch, useAppSelector } from '../../State/hooks';
 import { selectFetchNumberOfJumps, setFetchNumberOfJumps } from '../../State/Settings/settingsSlice';
 
@@ -20,7 +21,7 @@ export const Settings: React.FC = () => {
                 }
             }}
             tokens={{ childrenGap: 16, padding: 16 }}>
-            <LanguageSelect />
+            <SelectLanguage />
             <SelectTheme />
             <Slider
                 label={t("settings_map_size")}
@@ -30,6 +31,7 @@ export const Settings: React.FC = () => {
                 showValue
                 onChange={v => dispatch(setFetchNumberOfJumps(v))}
             />
+            <SelectEnableNotifications />
         </Stack>
     );
 }

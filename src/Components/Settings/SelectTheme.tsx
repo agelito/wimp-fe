@@ -20,6 +20,9 @@ export const SelectTheme: React.FC = () => {
                 selectedImageSrc: theme.img,
                 imageSize: { width: 64, height: 64 },
                 text: t(`theme_${theme.id}_name`),
+                iconProps: theme.icon ? {
+                    iconName: theme.icon,
+                } : undefined,
                 onChange: () => dispatch(setThemeId(theme.id)),
             };
         });

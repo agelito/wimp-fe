@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../State/hooks";
 import { selectLanguage, setLanguage } from "../../State/Settings/settingsSlice";
 
-export const LanguageSelect = () => {
+export const SelectLanguage = () => {
 
     const { t, i18n } = useTranslation();
 

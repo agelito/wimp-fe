@@ -11,10 +11,12 @@ export interface StarSystem {
 interface UniverseState {
     locatedAtSystemId: number,
     selectedSystem?: StarSystem,
+    starSystems: StarSystem[],
 };
 
 const initialState: UniverseState = {
-    locatedAtSystemId: 30001192 // GJ0-OJ
+    locatedAtSystemId: 30001192, // GJ0-OJ
+    starSystems: [],
 };
 
 export const universeSlice = createSlice({
@@ -29,6 +31,9 @@ export const universeSlice = createSlice({
         },
         deselectSystem: (state) => {
             state.selectedSystem = undefined;
+        },
+        setStarSystems: (state, action: PayloadAction<StarSystem[]>) => {
+            state.starSystems = action.payload;
         }
     },
 });
@@ -58,7 +63,7 @@ export const wimpUniverseApi = createApi({
 // auto-generated based on the defined endpoints
 export const { useGetUniverseGraphWithinJumpsQuery } = wimpUniverseApi
 
-export const { moveToSystem, selectSystem, deselectSystem } = universeSlice.actions;
+export const { moveToSystem, selectSystem, deselectSystem, setStarSystems } = universeSlice.actions;
 export const selectUniverse = (state: RootState) => state.universe;
 export const selectSelectedSystemId = (state: RootState) => state.universe.selectedSystem?.systemId;
 export const selectSelectedSystem = (state: RootState) => state.universe.selectedSystem;

@@ -6,6 +6,7 @@ interface SettingsState {
     language: string,
     themeId: string,
     fetchNumberOfJumps: number,
+    enabledNotifications: boolean,
 };
 
 const initialState: SettingsState = {
@@ -13,6 +14,7 @@ const initialState: SettingsState = {
     language: 'en',
     themeId: 'caldari',
     fetchNumberOfJumps: 3,
+    enabledNotifications: false,
 };
 
 export const settingsSlice = createSlice({
@@ -33,13 +35,17 @@ export const settingsSlice = createSlice({
         },
         setFetchNumberOfJumps: (state, action: PayloadAction<number>) => {
             state.fetchNumberOfJumps = action.payload;
-        }
+        },
+        setEnabledNotifications: (state, action: PayloadAction<boolean>) => {
+            state.enabledNotifications = action.payload;
+        },
     },
 });
 
-export const { setExpandedSideNav, toggleShowSettings, setLanguage, setThemeId, setFetchNumberOfJumps } = settingsSlice.actions;
+export const { setExpandedSideNav, toggleShowSettings, setLanguage, setThemeId, setFetchNumberOfJumps, setEnabledNotifications } = settingsSlice.actions;
 export const selectExpandedSideNav = (state: RootState) => state.settings.expandedSideNav;
 export const selectLanguage = (state: RootState) => state.settings.language;
 export const selectThemeId = (state: RootState) => state.settings.themeId;
 export const selectFetchNumberOfJumps = (state: RootState) => state.settings.fetchNumberOfJumps;
+export const selectEnabledNotifications = (state: RootState) => state.settings.enabledNotifications;
 export default settingsSlice.reducer;
