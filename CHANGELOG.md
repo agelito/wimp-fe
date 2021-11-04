@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.8](https://github.com/agelito/wimp-fe/compare/v0.1.7...v0.1.8) (2021-11-04)
+
+
+### Features
+
+* add desktop notifications and update themes ([63dcf1f](https://github.com/agelito/wimp-fe/commit/63dcf1ff6155bc866248419daf6b3494673aabd1))
+
 ### [0.1.7](https://github.com/agelito/wimp-fe/compare/v0.1.6...v0.1.7) (2021-11-01)
 
 
