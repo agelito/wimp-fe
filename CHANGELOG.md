@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.9](https://github.com/agelito/wimp-fe/compare/v0.1.8...v0.1.9) (2021-11-05)
+
+
+### Features
+
+* add audio notifications ([45475ca](https://github.com/agelito/wimp-fe/commit/45475ca08a4e9ef35b7b29ead2011031e560d970))
+* add womp favicon ([735877d](https://github.com/agelito/wimp-fe/commit/735877de7e80ac39ceb432d84044f8bffc233d93))
+
 ### [0.1.8](https://github.com/agelito/wimp-fe/compare/v0.1.7...v0.1.8) (2021-11-04)
 
 
