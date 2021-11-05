@@ -5,7 +5,7 @@ import { selectPicture } from "../../State/Picture/pictureSlice";
 import { selectUniverse } from "../../State/Universe/universeSlice";
 import { distinct } from "../../Utils/Distinct";
 
-export const IntelNotifications: React.FC = () => {
+export const DesktopNotifications: React.FC = () => {
     const { newIntelEntries, movedIntelEntries } = useAppSelector(selectPicture);
     const { starSystems } = useAppSelector(selectUniverse);
 

@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { NotificationSoundEffects, SoundEffect } from "../../Components/Settings/NotificationSoundEffects";
 import { RootState } from "../store";
 
 interface SettingsState {
@@ -6,7 +7,9 @@ interface SettingsState {
     language: string,
     themeId: string,
     fetchNumberOfJumps: number,
-    enabledNotifications: boolean,
+    desktopNotifications: boolean,
+    audioNotifications: boolean,
+    audioNotificationSoundEffect: SoundEffect,
 };
 
 const initialState: SettingsState = {
@@ -14,7 +17,9 @@ const initialState: SettingsState = {
     language: 'en',
     themeId: 'caldari',
     fetchNumberOfJumps: 3,
-    enabledNotifications: false,
+    desktopNotifications: false,
+    audioNotifications: false,
+    audioNotificationSoundEffect: NotificationSoundEffects[0],
 };
 
 export const settingsSlice = createSlice({
@@ -36,16 +41,33 @@ export const settingsSlice = createSlice({
         setFetchNumberOfJumps: (state, action: PayloadAction<number>) => {
             state.fetchNumberOfJumps = action.payload;
         },
-        setEnabledNotifications: (state, action: PayloadAction<boolean>) => {
-            state.enabledNotifications = action.payload;
+        setDesktopNotifications: (state, action: PayloadAction<boolean>) => {
+            state.desktopNotifications = action.payload;
         },
+        setAudioNotifications: (state, action: PayloadAction<boolean>) => {
+            state.audioNotifications = action.payload;
+        },
+        setAudioNotificationSoundEffect: (state, action: PayloadAction<SoundEffect>) => {
+            state.audioNotificationSoundEffect = action.payload;
+        }
     },
 });
 
-export const { setExpandedSideNav, toggleShowSettings, setLanguage, setThemeId, setFetchNumberOfJumps, setEnabledNotifications } = settingsSlice.actions;
+export const {
+    setExpandedSideNav,
+    toggleShowSettings,
+    setLanguage,
+    setThemeId,
+    setFetchNumberOfJumps,
+    setDesktopNotifications,
+    setAudioNotifications,
+    setAudioNotificationSoundEffect
+} = settingsSlice.actions;
 export const selectExpandedSideNav = (state: RootState) => state.settings.expandedSideNav;
 export const selectLanguage = (state: RootState) => state.settings.language;
 export const selectThemeId = (state: RootState) => state.settings.themeId;
 export const selectFetchNumberOfJumps = (state: RootState) => state.settings.fetchNumberOfJumps;
-export const selectEnabledNotifications = (state: RootState) => state.settings.enabledNotifications;
+export const selectDesktopNotifications = (state: RootState) => state.settings.desktopNotifications;
+export const selectAudioNotifications = (state: RootState) => state.settings.audioNotifications;
+export const selectAudioNotificationSoundEffect = (state: RootState) => state.settings.audioNotificationSoundEffect;
 export default settingsSlice.reducer;

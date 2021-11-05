@@ -1,16 +1,16 @@
 import { IStackStyles, Stack } from '@fluentui/react';
-import { IntelNotifications } from '../../Components/Intel/IntelNotifications';
+import { DesktopNotifications } from '../../Components/Intel/DesktopNotifications';
 import { IntelPicture } from '../../Components/Intel/IntelPicture';
 import UniverseMap from '../../Components/UniverseMap/UniverseMap';
 import { useAppSelector } from '../../State/hooks';
-import { selectEnabledNotifications, selectFetchNumberOfJumps } from '../../State/Settings/settingsSlice';
+import { selectDesktopNotifications, selectFetchNumberOfJumps } from '../../State/Settings/settingsSlice';
 import { selectLocatedAtSystemId } from '../../State/Universe/universeSlice';
 
 function Home() {
 
   const locatedAt = useAppSelector(selectLocatedAtSystemId);
   const mapSize = useAppSelector(selectFetchNumberOfJumps);
-  const enabledNotifications = useAppSelector(selectEnabledNotifications);
+  const desktopNotifications = useAppSelector(selectDesktopNotifications);
 
   const homeContainerStyle: IStackStyles = {
     root: {
@@ -21,7 +21,7 @@ function Home() {
   return (
     <Stack grow styles={homeContainerStyle}>
       <IntelPicture />
-      {enabledNotifications && <IntelNotifications />}
+      {desktopNotifications && <DesktopNotifications />}
       <UniverseMap systemId={locatedAt} mapSize={mapSize} />
     </Stack>
   );

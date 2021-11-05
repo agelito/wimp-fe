@@ -2,11 +2,11 @@ import { Toggle } from "@fluentui/react";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../../State/hooks";
-import { selectEnabledNotifications, setEnabledNotifications } from "../../State/Settings/settingsSlice";
+import { selectDesktopNotifications, setDesktopNotifications } from "../../State/Settings/settingsSlice";
 
-export const SelectEnableNotifications: React.FC = () => {
+export const SelectDesktopNotifications: React.FC = () => {
     const { t } = useTranslation();
-    const enabledNotifications = useAppSelector(selectEnabledNotifications);
+    const desktopNotifications = useAppSelector(selectDesktopNotifications);
     const dispatch = useAppDispatch();
 
     const unsupported = useMemo(() => !('Notification' in window), []);
@@ -17,18 +17,18 @@ export const SelectEnableNotifications: React.FC = () => {
         setError(false);
 
         if (!value) {
-            dispatch(setEnabledNotifications(false));
+            dispatch(setDesktopNotifications(false));
             return;
         }
 
         if (Notification.permission === "granted") {
-            dispatch(setEnabledNotifications(true));
+            dispatch(setDesktopNotifications(true));
             return;
         }
 
         const result = await Notification.requestPermission();
         if (result === "granted") {
-            dispatch(setEnabledNotifications(true));
+            dispatch(setDesktopNotifications(true));
         } else {
             setError(true);
         }
@@ -39,7 +39,7 @@ export const SelectEnableNotifications: React.FC = () => {
             <Toggle
                 label={t(`settings_enable_notifications`)}
                 disabled={unsupported}
-                checked={enabledNotifications}
+                checked={desktopNotifications}
                 onText={t(`toggle_on`)}
                 offText={t(`toggle_off`)}
                 onChange={onChange}

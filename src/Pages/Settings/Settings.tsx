@@ -1,6 +1,7 @@
 import { Slider, Stack } from '@fluentui/react';
 import { useTranslation } from 'react-i18next';
-import { SelectEnableNotifications } from '../../Components/Settings/SelectEnableNotifications';
+import { SelectAudioNotifications } from '../../Components/Settings/SelectAudioNotifications';
+import { SelectDesktopNotifications } from '../../Components/Settings/SelectDesktopNotifications';
 import { SelectLanguage } from '../../Components/Settings/SelectLanguage';
 import { SelectTheme } from '../../Components/Settings/SelectTheme';
 import { useAppDispatch, useAppSelector } from '../../State/hooks';
@@ -31,7 +32,8 @@ export const Settings: React.FC = () => {
                 showValue
                 onChange={v => dispatch(setFetchNumberOfJumps(v))}
             />
-            <SelectEnableNotifications />
+            <SelectDesktopNotifications />
+            <SelectAudioNotifications />
         </Stack>
     );
 }

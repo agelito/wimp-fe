@@ -16,6 +16,9 @@
     "settings_dark_mode_aria": "Select dark mode",
     "settings_map_size": "Map Size",
     "settings_enable_notifications": "Desktop Notifications",
+    "settings_audio_notifications": "Audio Notifications",
+    "settings_audio_notification_sound_effect": "Sound Effect",
+    "settings_select_sound_effect": "Select sound effect",
     "universe_map_fetch_error_description": "Error fetching map data! Please try again later.",
     "intel_picture_fetch_error_description": "Error fetching intel data! Please try again later.",
     "error_alert_dismiss_button_aria": "Dismiss",
@@ -105,5 +108,16 @@
     "character_with_count_one": "{{count}} character",
     "character_with_count_other": "{{count}} characters",
     "moved_intel_notification_title": "Movement Intel",
-    "moved_intel_notification_message": "{{character}} moved to {{system}}"
+    "moved_intel_notification_message": "{{character}} moved to {{system}}",
+    "notification_alarm_tone": "Alarm tone",
+    "notification_door_bell": "Door bell",
+    "notification_short_alarm": "Short alarm",
+    "notification_confirmation_tone": "Confirmation tone",
+    "notification_sci_fi_beep": "Sci-fi beep",
+    "notification_sci_fi_error": "Sci-fi error",
+    "notification_sci_fi_notification": "Sci-fi notification",
+    "notification_sci_fi_robot": "Robot red alert",
+    "notification_synth_notification": "Synth notification",
+    "audio_notification_unmute_hint": "Audio notifications",
+    "audio_notification_unmute_description": "Press this icon to un-mute audio notifications."
 }

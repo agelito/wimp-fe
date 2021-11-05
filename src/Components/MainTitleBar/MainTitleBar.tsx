@@ -2,8 +2,9 @@ import { DefaultEffects, IconButton, IStackStyles, Stack, Text, useTheme } from 
 import { useTranslation } from "react-i18next";
 import { selectIsSignedIn } from "../../State/Auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../../State/hooks";
-import { toggleShowSettings } from "../../State/Settings/settingsSlice";
+import { selectAudioNotifications, toggleShowSettings } from "../../State/Settings/settingsSlice";
 import { AppWindowControls } from "../AppWindowControls/AppWindowControls";
+import { AudioNotifications } from "../Intel/AudioNotifications";
 import { LogoutButton } from "../User/LogoutButton";
 
 function MainTitleBar() {
@@ -13,6 +14,7 @@ function MainTitleBar() {
     const theme = useTheme();
 
     const isSignedIn = useAppSelector(selectIsSignedIn);
+    const audioNotifications = useAppSelector(selectAudioNotifications);
 
     const mainNavigationBarContainerStyle: IStackStyles = {
         root: {
@@ -51,9 +53,10 @@ function MainTitleBar() {
                     </Text>
                 </Stack>
             </Stack>
-            {isSignedIn ? <Stack horizontal horizontalAlign={"end"} verticalAlign={"center"}>
-                <LogoutButton />
-            </Stack> : <></>}
+            <Stack horizontal horizontalAlign={"end"} verticalAlign={"center"}>
+                {audioNotifications && <AudioNotifications />}
+                {isSignedIn && <LogoutButton />}
+            </Stack>
             {process.env.REACT_APP_IS_ELECTRON && <Stack horizontal horizontalAlign={"end"}>
                 <AppWindowControls />
             </Stack>}
