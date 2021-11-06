@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../../State/hooks";
 import { selectPicture } from "../../State/Picture/pictureSlice";
+import { selectAudioNotificationSoundEffect } from "../../State/Settings/settingsSlice";
 import { selectUniverse } from "../../State/Universe/universeSlice";
 
 export const AudioNotifications: React.FC = () => {
@@ -18,6 +19,7 @@ export const AudioNotifications: React.FC = () => {
 
     const [unmuteHintWasDisplayed, setUnmuteHintWasDisplayed] = useState(false);
     const [unmuteHintVisible, setUnmuteHintVisible] = useState(false);
+    const soundEffect = useAppSelector(selectAudioNotificationSoundEffect);
 
     useEffect(() => {
         if (muted && !unmuteHintWasDisplayed) {
@@ -57,7 +59,7 @@ export const AudioNotifications: React.FC = () => {
                         onClick={() => toggleMute()}
                     />
                 </div>
-                <audio ref={audio} muted={muted} src={`audio/alarm-tone.mp3`} />
+                <audio ref={audio} muted={muted} src={soundEffect.src} />
                 {unmuteHintVisible && (
                     <Coachmark
                         target={button.current}
