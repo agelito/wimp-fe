@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.10](https://github.com/agelito/wimp-fe/compare/v0.1.9...v0.1.10) (2021-11-06)
+
+
+### Bug Fixes
+
+* use selected sound effect in notification ([e9ed242](https://github.com/agelito/wimp-fe/commit/e9ed24218af09f050c764f3610c496fea50f13c1))
+
 ### [0.1.9](https://github.com/agelito/wimp-fe/compare/v0.1.8...v0.1.9) (2021-11-05)
 
 
